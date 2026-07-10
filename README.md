@@ -1,5 +1,7 @@
 # NHS HRA & CWT Enterprise Data Warehouse Dashboard
 
+🔗 **Live Production URL:** [https://nhs-dashboard-beta.vercel.app](https://nhs-dashboard-beta.vercel.app)
+
 A modern, high-performance dual-purpose dashboard application built with Next.js, React, and Tailwind CSS. It serves two main functions:
 1. **NHS HRA Dashboard**: Operational tracking, capacity planning, and turnaround analysis for health research applications.
 2. **CWT Enterprise EDW Showcase**: A premium presentation of an Enterprise Data Warehouse architecture, data pipelines, and business outcomes built for global scale.
