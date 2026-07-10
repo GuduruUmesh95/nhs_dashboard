@@ -187,7 +187,7 @@ export default function DataIngestionPage() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 14 }}>
           {pipelineTypes.map((p, i) => (
             <div key={i} className="pipeline-card">
-              <div style={{ display: 'flex', align: 'center', gap: 12, marginBottom: 10 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
                 <div style={{ width: 40, height: 40, borderRadius: 10, background: p.color + '14', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>
                   {p.icon}
                 </div>

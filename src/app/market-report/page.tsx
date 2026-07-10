@@ -6,7 +6,7 @@ import {
   PieChart, Pie, Cell, ComposedChart, Line, LabelList
 } from 'recharts';
 import { Download, Filter, RefreshCcw } from 'lucide-react';
-import { ApplicationRecord } from '@/types';
+import { ClrRecord } from '@/types';
 import StatusBadge from '@/components/StatusBadge';
 
 // Custom colors based on the requested monochromatic theme
@@ -22,7 +22,7 @@ const COLORS = [
 const MONTHS_ORDER = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 export default function MarketReportPage() {
-  const [data, setData] = useState<ApplicationRecord[]>([]);
+  const [data, setData] = useState<ClrRecord[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Filter States
@@ -38,7 +38,7 @@ export default function MarketReportPage() {
   useEffect(() => {
     fetch('/data/clr.json')
       .then(res => res.json())
-      .then((json: ApplicationRecord[]) => {
+      .then((json: ClrRecord[]) => {
         setData(json);
         
         // Default select the current year if available
