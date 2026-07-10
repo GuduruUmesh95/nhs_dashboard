@@ -1,0 +1,166 @@
+{
+  "TotalApplications": 450,
+  "ActiveApplications": 163,
+  "ClosedApplications": 141,
+  "OnHoldApplications": 33,
+  "PipelineApplications": 61,
+  "CancelledApplications": 21,
+  "NActiveApplications": 31,
+  "ThisMonthApprovals": 37,
+  "NextMonthApprovals": 87,
+  "AvgCycleTimeDays": 113,
+  "OnTrackCount": 106,
+  "AtRiskCount": 77,
+  "BehindCount": 44,
+  "CycleTimeByType": [
+    {
+      "ApplicationType": "Amendment",
+      "AvgDays": 110
+    },
+    {
+      "ApplicationType": "New Application",
+      "AvgDays": 113
+    },
+    {
+      "ApplicationType": "Add-Change",
+      "AvgDays": 120
+    },
+    {
+      "ApplicationType": "Existing Service",
+      "AvgDays": 108
+    }
+  ],
+  "MonthlyApprovals": [
+    {
+      "Month": "Aug 2025",
+      "Count": 9
+    },
+    {
+      "Month": "Sep 2025",
+      "Count": 8
+    },
+    {
+      "Month": "Oct 2025",
+      "Count": 8
+    },
+    {
+      "Month": "Nov 2025",
+      "Count": 9
+    },
+    {
+      "Month": "Dec 2025",
+      "Count": 8
+    },
+    {
+      "Month": "Jan 2026",
+      "Count": 6
+    },
+    {
+      "Month": "Feb 2026",
+      "Count": 7
+    },
+    {
+      "Month": "Mar 2026",
+      "Count": 7
+    },
+    {
+      "Month": "Apr 2026",
+      "Count": 14
+    },
+    {
+      "Month": "May 2026",
+      "Count": 11
+    },
+    {
+      "Month": "Jun 2026",
+      "Count": 5
+    },
+    {
+      "Month": "Jul 2026",
+      "Count": 9
+    }
+  ],
+  "AtRiskApplications": [
+    {
+      "ApplicationID": "HRA-2024-0006",
+      "Organisation": "Leeds Teaching Hospitals NHS Trust",
+      "NHSRegion": "NORAM",
+      "AssignedAnalyst": "Aisha Okonkwo",
+      "CurrentMilestone": "Site Assessment",
+      "MilestoneDueDate": "",
+      "StatusComments": "Review in progress. Escalated for resolution.",
+      "OverallStatus": "Behind"
+    },
+    {
+      "ApplicationID": "HRA-2024-0012",
+      "Organisation": "NHS North East ICB",
+      "NHSRegion": "NORAM",
+      "AssignedAnalyst": "Noah Carter",
+      "CurrentMilestone": "Stakeholder Consultation",
+      "MilestoneDueDate": "2026-11-10",
+      "StatusComments": "Review in progress. Escalated for resolution.",
+      "OverallStatus": "At Risk"
+    },
+    {
+      "ApplicationID": "HRA-2025-0019",
+      "Organisation": "Sheffield Teaching Hospitals NHS FT",
+      "NHSRegion": "APAC",
+      "AssignedAnalyst": "Jack Reynolds",
+      "CurrentMilestone": "Ethics Review",
+      "MilestoneDueDate": "2026-07-16",
+      "StatusComments": "Review in progress. Escalated for resolution.",
+      "OverallStatus": "At Risk"
+    },
+    {
+      "ApplicationID": "HRA-2024-0022",
+      "Organisation": "East of England NHS Trust",
+      "NHSRegion": "LATAM",
+      "AssignedAnalyst": "Luke Pemberton",
+      "CurrentMilestone": "Peer Review",
+      "MilestoneDueDate": "2026-10-02",
+      "StatusComments": "Review in progress. Escalated for resolution.",
+      "OverallStatus": "At Risk"
+    },
+    {
+      "ApplicationID": "HRA-2024-0032",
+      "Organisation": "Cardiff University",
+      "NHSRegion": "LATAM",
+      "AssignedAnalyst": "Ethan Price",
+      "CurrentMilestone": "Publication Sign-off",
+      "MilestoneDueDate": "2026-08-12",
+      "StatusComments": "Review in progress. Escalated for resolution.",
+      "OverallStatus": "Behind"
+    },
+    {
+      "ApplicationID": "HRA-2025-0033",
+      "Organisation": "East of England NHS Trust",
+      "NHSRegion": "LATAM",
+      "AssignedAnalyst": "Charlotte Davies",
+      "CurrentMilestone": "Site Assessment",
+      "MilestoneDueDate": "2026-11-20",
+      "StatusComments": "Review in progress. Escalated for resolution.",
+      "OverallStatus": "At Risk"
+    },
+    {
+      "ApplicationID": "HRA-2024-0036",
+      "Organisation": "Cambridge University Hospitals NHS FT",
+      "NHSRegion": "APAC",
+      "AssignedAnalyst": "Benjamin Nelson",
+      "CurrentMilestone": "Protocol Approval",
+      "MilestoneDueDate": "2026-10-10",
+      "StatusComments": "Review in progress. Escalated for resolution.",
+      "OverallStatus": "Behind"
+    },
+    {
+      "ApplicationID": "HRA-2024-0040",
+      "Organisation": "Sheffield Teaching Hospitals NHS FT",
+      "NHSRegion": "APAC",
+      "AssignedAnalyst": "Aria King",
+      "CurrentMilestone": "Data Access Agreement",
+      "MilestoneDueDate": "2026-08-23",
+      "StatusComments": "Review in progress. Escalated for resolution.",
+      "OverallStatus": "Behind"
+    }
+  ],
+  "LastUpdated": "2026-07-09 22:16"
+}
