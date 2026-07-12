@@ -7,6 +7,8 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, ReferenceLine, CartesianGrid } from 'recharts';
 
+import PdfExportButton from '@/components/PdfExportButton';
+
 export default function CapacityPlannerPage() {
   const [data, setData] = useState<CapacityRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -58,30 +60,32 @@ export default function CapacityPlannerPage() {
   };
 
   const HeatCell = ({ val, max }: { val: number, max: number }) => {
-    let cls = 'heat-empty';
-    if (val > 0) {
-      if (val < max) cls = 'heat-green';
-      else if (val === max) cls = 'heat-amber';
-      else cls = 'heat-red';
-    }
-    return <div className={`heatmap-cell ${cls}`}>{val > 0 ? val : '0'}</div>;
+    if (val === 0) return <div>-</div>;
+    const isOver = val > max;
+    const ratio = Math.min(val / max, 1);
+    const bg = isOver ? 'rgba(239, 68, 68, 0.15)' : `rgba(14, 129, 198, ${ratio * 0.4})`;
+    const color = isOver ? 'var(--danger)' : (ratio > 0.8 ? 'var(--text)' : 'var(--text-muted)');
+    return <div style={{ background: bg, color, padding: '2px 6px', borderRadius: 4, fontWeight: isOver ? 600 : 400 }}>{val}</div>;
   };
 
-  if (loading) return <div className="page-body"><div className="spinner-wrap"><div className="spinner"/></div></div>;
+  if (loading) return <div className="page-body" style={{ padding: 24 }}>Loading capacity model...</div>;
 
   return (
     <div className="page-body fade-in">
       <div className="topbar">
         <div>
-          <div className="topbar-title" style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Users size={18} /> Analyst Capacity Planner</div>
-          <div className="topbar-subtitle">Workload vs capacity heatmap for 12-week rolling window</div>
+          <div className="topbar-title" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <Users size={18} /> Analyst Capacity Planner
+          </div>
+          <div className="topbar-subtitle">Resource allocation and capacity forecasting (12 weeks)</div>
         </div>
-        <div className="topbar-right">
+        <div className="topbar-right" style={{ display: 'flex', gap: '8px' }}>
+          <PdfExportButton targetId="pdf-content" filename="Capacity_Planner" />
           <button className="btn btn-gold btn-sm" onClick={exportExcel}><Download size={14} /> Export</button>
         </div>
       </div>
 
-      <div style={{ padding: 24 }}>
+      <div id="pdf-content" style={{ padding: 24, backgroundColor: 'var(--bg-main)' }}>
         <div className="card" style={{ marginBottom: 24 }}>
           <div className="card-header"><div className="card-title">Team Utilization Forecast</div></div>
           <div className="card-body" style={{ height: 280 }}>

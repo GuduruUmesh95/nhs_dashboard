@@ -28,13 +28,7 @@ const NAV: NavItem[] = [
       { label: 'Analyst Capacity Planner', href: '/capacity-planner' },
     ]
   },
-  {
-    label: 'Application Throughput', icon: <TrendingUp size={15} />,
-    children: [
-      { label: 'Weekly Throughput', href: '/throughput/weekly' },
-      { label: 'Monthly Throughput', href: '/throughput/monthly' },
-    ]
-  },
+  { label: 'Application Throughput', href: '/throughput', icon: <TrendingUp size={15} /> },
   { label: 'Analyst Workload Summary', href: '/workload-summary', icon: <Users size={15} /> },
   { label: 'Approval Turnaround Analysis', href: '/turnaround-analysis', icon: <Clock size={15} /> },
 ];
@@ -68,13 +62,13 @@ export default function Sidebar() {
   return (
     <aside className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
       {/* Logo */}
-      <div className="sidebar-logo">
+      <div className="sidebar-logo" style={{ paddingBottom: '24px' }}>
         <Image
           src="/images/logo.avif"
           alt="The Visionarys"
           width={38}
           height={38}
-          style={{ objectFit: 'contain', borderRadius: 6 }}
+          style={{ objectFit: 'contain', borderRadius: 6, width: 38, height: 38 }}
           priority
         />
         <div className="sidebar-logo-text-wrapper">
@@ -156,7 +150,7 @@ export default function Sidebar() {
 
         <div className="sidebar-divider" style={{ marginTop: 16 }} />
 
-        {/* CWT Enterprise EDW Section */}
+        {/* NHS HRA Prototype Section */}
         <div style={{ padding: '12px 18px 6px' }}>
           <div style={{
             background: 'linear-gradient(90deg, rgba(0,120,212,0.18) 0%, rgba(0,120,212,0.04) 100%)',
@@ -166,7 +160,7 @@ export default function Sidebar() {
             textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 6
           }}>
             <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#0078D4', boxShadow: '0 0 6px #0078D4' }} />
-            <span className="sidebar-text">CWT Enterprise EDW</span>
+            <span className="sidebar-text">NHS HRA Prototype</span>
           </div>
         </div>
 

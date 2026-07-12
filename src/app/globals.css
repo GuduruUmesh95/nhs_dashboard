@@ -643,3 +643,62 @@ table.nhs-table tbody tr:hover, table.custom-table tbody tr:hover {
 @keyframes shimmer { from { background-position: -200px 0; } to { background-position: 200px 0; } }
 
 .fade-in { animation: fadeIn 0.35s ease both; }
+
+/* ── PDF Export Overrides ───────────────────────────────────────────────────── */
+body.pdf-exporting .kpi-card, 
+body.pdf-exporting .card {
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background-image: none !important; /* Force remove linear-gradients */
+}
+body.pdf-exporting .card {
+  background-color: #FFFFFF !important;
+  border: 1px solid #E8EDF5 !important;
+}
+body.pdf-exporting .kpi-card { background-color: #FFFFFF !important; border: 1px solid #E8EDF5 !important; }
+body.pdf-exporting .kpi-card.accent { background-color: #Eef5fb !important; border: 1px solid #dbeaf5 !important; }
+body.pdf-exporting .kpi-card.success { background-color: #Eef8ee !important; border: 1px solid #dcf0dc !important; }
+body.pdf-exporting .kpi-card.warning { background-color: #fff8eb !important; border: 1px solid #fae3be !important; }
+body.pdf-exporting .kpi-card.danger { background-color: #fff1f1 !important; border: 1px solid #f9dcdc !important; }
+body.pdf-exporting .kpi-card.info { background-color: #F0f8fd !important; border: 1px solid #d0ecf9 !important; }
+body.pdf-exporting .kpi-card.purple { background-color: #fdf5f9 !important; border: 1px solid #f0d5e2 !important; }
+body.pdf-exporting .kpi-card.orange { background-color: #fff4ed !important; border: 1px solid #ffe1cc !important; }
+
+/* ── Print Styles (Native PDF Export) ───────────────────────────────────────── */
+@media print {
+  /* Force colors to print exactly as seen on screen */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide navigation and UI elements */
+  .sidebar, .topbar, button, .btn, .no-print {
+    display: none !important;
+  }
+
+  /* Reset layout constraints so all content prints on scrollable pages */
+  body, html, .layout-shell, .layout-content, .page-body {
+    height: auto !important;
+    overflow: visible !important;
+    position: static !important;
+    background: #fff !important;
+  }
+
+  /* Ensure cards break cleanly across pages */
+  .card, .bento-layout > div {
+    break-inside: avoid;
+    box-shadow: none !important;
+  }
+  
+  .card {
+    border: 1px solid #ddd !important;
+  }
+
+  /* Optional: Force Landscape via CSS (some browsers respect this) */
+  @page {
+    size: landscape;
+    margin: 10mm;
+  }
+}

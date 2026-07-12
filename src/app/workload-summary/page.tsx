@@ -7,6 +7,8 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid } from 'recharts';
 
+import PdfExportButton from '@/components/PdfExportButton';
+
 export default function WorkloadSummaryPage() {
   const [data, setData] = useState<WorkloadRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -66,12 +68,13 @@ export default function WorkloadSummaryPage() {
           <div className="topbar-title" style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Users size={18} /> Analyst Workload Summary</div>
           <div className="topbar-subtitle">Consolidated view of application distribution across the team</div>
         </div>
-        <div className="topbar-right">
+        <div className="topbar-right" style={{ display: 'flex', gap: '8px' }}>
+          <PdfExportButton targetId="pdf-content" filename="Workload_Summary" />
           <button className="btn btn-gold btn-sm" onClick={exportExcel}><Download size={14} /> Export</button>
         </div>
       </div>
 
-      <div style={{ padding: 24 }}>
+      <div id="pdf-content" style={{ padding: 24, backgroundColor: 'var(--bg-main)' }}>
         <div className="card" style={{ marginBottom: 24 }}>
           <div className="card-header"><div className="card-title">Top 15 Analysts by Current Workload (Stacked)</div></div>
           <div className="card-body" style={{ height: 300 }}>
@@ -142,7 +145,7 @@ export default function WorkloadSummaryPage() {
                     <td style={{ textAlign: 'center', color: r.OnHold ? 'var(--danger)' : 'var(--text-muted)', fontWeight: r.OnHold ? 600 : 400 }}>{r.OnHold}</td>
                     <td style={{ textAlign: 'center', color: 'var(--text-muted)' }}>{r.Closed}</td>
                     <td style={{ textAlign: 'center', color: 'var(--text-muted)' }}>{r.Cancelled}</td>
-                    <td style={{ textAlign: 'center', fontWeight: 700, background: '#f8f9fc' }}>{r.Total}</td>
+                    <td style={{ textAlign: 'center', fontWeight: 700 }}>{r.Total}</td>
                   </tr>
                 ))}
               </tbody>

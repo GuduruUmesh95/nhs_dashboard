@@ -34,6 +34,54 @@ export async function fetchHomeSummary(): Promise<HomeSummary> {
   return res.json();
 }
 
+// ─── Derived: Home Summary ───────────────────────────────────────────────────
+export function deriveHomeSummary(clr: ClrRecord[]): HomeSummary {
+  const active = clr.filter(r => r.ApplicationStatus === 'Active');
+  const n_active = clr.filter(r => r.ApplicationStatus === 'N-Active');
+  const closed = clr.filter(r => r.ApplicationStatus === 'Closed');
+  const on_hold = clr.filter(r => r.ApplicationStatus === 'On Hold');
+  const pipeline = clr.filter(r => r.ApplicationStatus === 'Pipeline');
+  const cancelled = clr.filter(r => r.ApplicationStatus === 'Cancelled');
+  
+  const now = new Date();
+  const monthsList = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const thisMonth = monthsList[now.getMonth()];
+  const nextMonth = monthsList[(now.getMonth() + 1) % 12];
+  
+  const thisMonthApprovals = clr.filter(r => r.ApprovalMonth === thisMonth && r.ApprovalYear === String(now.getFullYear())).length;
+  const nextMonthApprovals = clr.filter(r => r.ApprovalMonth === nextMonth).length;
+  
+  const closedCycles = closed.filter(r => r.CycleTime > 0).map(r => r.CycleTime);
+  const avgCycle = closedCycles.length ? Math.round(closedCycles.reduce((a, b) => a + b, 0) / closedCycles.length) : 0;
+  
+  const monthlyApprovals: { Month: string; Count: number }[] = [];
+  for (let i = 0; i < 12; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() - 11 + i, 1);
+    const mo = monthsList[d.getMonth()];
+    const yr = String(d.getFullYear());
+    const count = closed.filter(r => r.ApprovalMonth === mo && r.ApprovalYear === yr).length;
+    monthlyApprovals.push({ Month: mo.substring(0, 3) + ' ' + yr, Count: count });
+  }
+
+  return {
+    TotalApplications: clr.length,
+    ActiveApplications: active.length,
+    ClosedApplications: closed.length,
+    OnHoldApplications: on_hold.length,
+    PipelineApplications: pipeline.length,
+    CancelledApplications: cancelled.length,
+    NActiveApplications: n_active.length,
+    ThisMonthApprovals: thisMonthApprovals,
+    NextMonthApprovals: nextMonthApprovals,
+    AvgCycleTimeDays: avgCycle,
+    OnTrackCount: clr.filter(r => r.OverallStatus === 'On Track').length,
+    AtRiskCount: clr.filter(r => r.OverallStatus === 'At Risk').length,
+    BehindCount: clr.filter(r => r.OverallStatus === 'Behind').length,
+    MonthlyApprovals: monthlyApprovals,
+    LastUpdated: now.toISOString().substring(0, 16).replace('T', ' ')
+  };
+}
+
 // ─── Derived: Active Application Tracker ─────────────────────────────────────
 export function deriveTracker(clr: ClrRecord[]): ClrRecord[] {
   const today = new Date();

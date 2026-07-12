@@ -7,17 +7,21 @@ import {
 } from 'recharts';
 import { Download, Filter, RefreshCcw } from 'lucide-react';
 import { ClrRecord } from '@/types';
+import { fetchCLR } from '@/lib/data';
 import StatusBadge from '@/components/StatusBadge';
+import PdfExportButton from '@/components/PdfExportButton';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
-// Custom colors based on the requested monochromatic theme
+// Premium brand color palette for charts
 const COLORS = [
-  'rgba(14, 129, 198, 1)',
-  'rgba(14, 129, 198, 0.85)',
-  'rgba(14, 129, 198, 0.7)',
-  'rgba(14, 129, 198, 0.55)',
-  'rgba(14, 129, 198, 0.4)',
-  'rgba(14, 129, 198, 0.25)',
-  'rgba(14, 129, 198, 0.1)'
+  '#0E81C6', // Brand Blue
+  '#26D3C8', // Aqua
+  '#F1B71C', // Gold
+  '#8B5CF6', // Purple
+  '#E23B53', // Rose
+  '#F57B20', // Orange
+  '#4ADE80', // Emerald
 ];
 const MONTHS_ORDER = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -36,9 +40,7 @@ export default function MarketReportPage() {
   const [perPage, setPerPage] = useState(10);
 
   useEffect(() => {
-    fetch('/data/clr.json')
-      .then(res => res.json())
-      .then((json: ClrRecord[]) => {
+    fetchCLR().then((json: ClrRecord[]) => {
         setData(json);
         
         // Default select the current year if available
@@ -57,6 +59,27 @@ export default function MarketReportPage() {
         setLoading(false);
       });
   }, []);
+
+  const exportExcel = () => {
+    const ws = XLSX.utils.json_to_sheet(filteredData.map(r => ({
+      'Application ID': r.ApplicationID,
+      'Organisation': r.Organisation,
+      'Type': r.ApplicationType,
+      'Scope': r.ApplicationScope,
+      'Region': r.NHSRegion,
+      'Country': r.Country,
+      'Status': r.ApplicationStatus,
+      'Review Stage': r.ReviewStage,
+      'Research Type': r.ResearchType,
+      'Submission Date': r.SubmissionDate,
+      'Approval Date': r.ApprovalDate,
+      'Progress (%)': r.ProgressPercent,
+      'Cycle Time (days)': r.CycleTime
+    })));
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Market Report');
+    saveAs(new Blob([XLSX.write(wb, { type: 'array', bookType: 'xlsx' })]), 'Market_Report.xlsx');
+  };
 
   // Unique values for filters
   const allRegions = useMemo(() => Array.from(new Set(data.map(d => d.NHSRegion).filter(Boolean))).sort(), [data]);
@@ -184,7 +207,7 @@ export default function MarketReportPage() {
   return (
     <div className="page-flex" style={{ flexDirection: 'row', gap: '20px', background: 'transparent' }}>
       {/* Sidebar Filters */}
-      <div style={{ width: '260px', background: 'var(--white)', borderRight: '1px solid var(--border)', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+      <div className="no-print" style={{ width: '260px', background: 'var(--white)', borderRight: '1px solid var(--border)', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
         <div style={{ padding: '16px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg)' }}>
           <h2 style={{ fontSize: '15px', margin: 0, display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text)', fontWeight: 700 }}>
             <Filter size={16} /> Filters
@@ -248,12 +271,15 @@ export default function MarketReportPage() {
             <h1 style={{ fontSize: '24px', fontWeight: 700, color: 'var(--text)', margin: 0, letterSpacing: '-0.5px' }}>Implementation Market Report</h1>
             <p style={{ color: 'var(--text-muted)', fontSize: '14px', margin: '4px 0 0 0' }}>Showing {filteredData.length} filtered applications</p>
           </div>
-          <button className="btn btn-primary btn-sm" onClick={() => alert('Exporting to Excel...')}>
-            <Download size={14} /> Export Report
-          </button>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <PdfExportButton targetId="pdf-content" filename="Implementation_Market_Report" />
+            <button className="btn btn-primary btn-sm" onClick={exportExcel}>
+              <Download size={14} /> Export Report
+            </button>
+          </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <div id="pdf-content" style={{ display: 'flex', flexDirection: 'column', gap: '20px', paddingBottom: '20px', backgroundColor: 'var(--bg-main)' }}>
           
           {/* Top KPI: Month Wise Volume */}
           <div className="card">
@@ -291,7 +317,7 @@ export default function MarketReportPage() {
                     </PieChart>
                   </ResponsiveContainer>
                   {/* Center Total Text */}
-                  <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', pointerEvents: 'none' }}>
+                  <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
                     <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.5px' }}>{totalVolume}</div>
                     <div style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.5px' }}>Total</div>
                   </div>
@@ -336,7 +362,7 @@ export default function MarketReportPage() {
                     </PieChart>
                   </ResponsiveContainer>
                   {/* Center Total Text */}
-                  <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', pointerEvents: 'none' }}>
+                  <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
                     <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.5px' }}>{totalVolume}</div>
                     <div style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.5px' }}>Total</div>
                   </div>
@@ -380,16 +406,16 @@ export default function MarketReportPage() {
                   <YAxis yAxisId="right" orientation="right" axisLine={false} tickLine={false} tick={{fill: 'var(--text-muted)', fontSize: 12}} dx={10} label={{ value: 'Projects / Days', angle: 90, position: 'insideRight', offset: -5, fill: 'var(--text-muted)', fontSize: 12 }} />
                   <RechartsTooltip cursor={{fill: 'rgba(17,29,51,0.03)'}} contentStyle={{borderRadius: '12px', border: '1px solid var(--border)', boxShadow: '0 8px 30px rgba(17, 29, 51, 0.08)'}}/>
                   <Legend wrapperStyle={{paddingTop: '10px'}} />
-                  <Bar yAxisId="left" dataKey="Volume" fill="rgba(14, 129, 198, 0.15)" name="App Volume" radius={[8, 8, 0, 0]} />
-                  <Line yAxisId="right" type="monotone" dataKey="Count" stroke="rgba(14, 129, 198, 1)" name="Project Count" strokeWidth={3} dot={{r: 4, strokeWidth: 2, fill: '#fff'}} activeDot={{r: 6}} />
-                  <Line yAxisId="right" type="monotone" dataKey="AvgCycleTime" stroke="var(--navy)" name="Avg Cycle Time (Days)" strokeWidth={3} dot={{r: 4, strokeWidth: 2, fill: '#fff'}} activeDot={{r: 6}} />
+                  <Bar yAxisId="left" dataKey="Volume" fill="rgba(38, 211, 200, 0.25)" name="App Volume" radius={[8, 8, 0, 0]} />
+                  <Line yAxisId="right" type="monotone" dataKey="Count" stroke="#0E81C6" name="Project Count" strokeWidth={3} dot={{r: 4, strokeWidth: 2, fill: '#fff'}} activeDot={{r: 6}} />
+                  <Line yAxisId="right" type="monotone" dataKey="AvgCycleTime" stroke="#8B5CF6" name="Avg Cycle Time (Days)" strokeWidth={3} dot={{r: 4, strokeWidth: 2, fill: '#fff'}} activeDot={{r: 6}} />
                 </ComposedChart>
               </ResponsiveContainer>
             </div>
           </div>
 
           {/* Raw Data Table */}
-          <div className="card">
+          <div className="card no-print">
             <div className="card-header">
               <div className="card-title">Detailed Filtered Records ({filteredData.length})</div>
             </div>

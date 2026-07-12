@@ -11,6 +11,8 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianG
 
 const MONTH_KEYS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
+import PdfExportButton from '@/components/PdfExportButton';
+
 export default function TurnaroundAnalysisPage() {
   const [clr, setClr] = useState<ClrRecord[]>([]);
   const [stats, setStats] = useState({ AvgDays: 0, MinDays: 0, MaxDays: 0, TotalAnalysed: 0 });
@@ -69,12 +71,13 @@ export default function TurnaroundAnalysisPage() {
           <div className="topbar-title" style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Clock size={18} /> Approval Turnaround Analysis</div>
           <div className="topbar-subtitle">Cycle time performance analysis based on closed applications</div>
         </div>
-        <div className="topbar-right">
+        <div className="topbar-right" style={{ display: 'flex', gap: '8px' }}>
+          <PdfExportButton targetId="pdf-content" filename="Turnaround_Analysis" />
           <button className="btn btn-gold btn-sm" onClick={exportExcel}><Download size={14} /> Export Details</button>
         </div>
       </div>
 
-      <div style={{ padding: 24 }}>
+      <div id="pdf-content" style={{ padding: 24, backgroundColor: 'var(--bg-main)' }}>
         <div className="stats-bar" style={{ marginBottom: 24 }}>
           <div className="stat-item"><div className="stat-label">Total Analysed</div><div className="stat-value">{stats.TotalAnalysed}</div></div>
           <div className="stat-divider" />
@@ -90,20 +93,15 @@ export default function TurnaroundAnalysisPage() {
           <div className="card-body" style={{ height: 340 }}>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData} margin={{ top: 20, right: 30, left: -10, bottom: 0 }}>
-                <defs>
-                  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="4" stdDeviation="4" floodOpacity="0.1" />
-                  </filter>
-                </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={true} horizontal={true} stroke="rgba(0,0,0,0.15)" />
                 <XAxis dataKey="name" tick={{ fontSize: 12, fill: 'var(--text-muted)' }} axisLine={false} tickLine={false} dy={10} />
                 <YAxis tick={{ fontSize: 12, fill: 'var(--text-muted)' }} axisLine={false} tickLine={false} dx={-10} />
                 <Tooltip cursor={{ fill: 'rgba(14,129,198,0.03)' }} contentStyle={{ fontSize: 12, borderRadius: 10, border: '1px solid var(--border)', boxShadow: '0 8px 24px rgba(0,0,0,0.08)', background: '#fff' }} />
                 <Legend wrapperStyle={{ fontSize: 12, paddingTop: '10px' }} />
                 <ReferenceLine y={60} stroke="#34A334" strokeDasharray="4 3" label={{ position: 'insideTopLeft', value: 'Target 60d', fill: '#34A334', fontSize: 10, fontWeight: 600 }} />
-                <Line type="monotone" dataKey="Within Target" stroke="#34A334" strokeWidth={2.5} dot={{ r: 3.5, strokeWidth: 2, fill: '#fff' }} activeDot={{ r: 6, fill: '#34A334' }} connectNulls filter="url(#shadow)" />
-                <Line type="monotone" dataKey="Slightly Delayed" stroke="#FF7915" strokeWidth={2.5} dot={{ r: 3.5, strokeWidth: 2, fill: '#fff' }} activeDot={{ r: 6, fill: '#FF7915' }} connectNulls filter="url(#shadow)" />
-                <Line type="monotone" dataKey="Significantly Delayed" stroke="#EF4444" strokeWidth={2.5} dot={{ r: 3.5, strokeWidth: 2, fill: '#fff' }} activeDot={{ r: 6, fill: '#EF4444' }} connectNulls filter="url(#shadow)" />
+                <Line type="monotone" dataKey="Within Target" stroke="#34A334" strokeWidth={2.5} dot={{ r: 3.5, strokeWidth: 2, fill: '#fff' }} activeDot={{ r: 6, fill: '#34A334' }} connectNulls />
+                <Line type="monotone" dataKey="Slightly Delayed" stroke="#FF7915" strokeWidth={2.5} dot={{ r: 3.5, strokeWidth: 2, fill: '#fff' }} activeDot={{ r: 6, fill: '#FF7915' }} connectNulls />
+                <Line type="monotone" dataKey="Significantly Delayed" stroke="#EF4444" strokeWidth={2.5} dot={{ r: 3.5, strokeWidth: 2, fill: '#fff' }} activeDot={{ r: 6, fill: '#EF4444' }} connectNulls />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -126,7 +124,7 @@ export default function TurnaroundAnalysisPage() {
                   <tr key={r.TimingCategory}>
                     <td><StatusBadge status={r.TimingCategory} /></td>
                     {MONTH_KEYS.map(m => <td key={m} style={{ textAlign: 'center', color: r[m] ? 'inherit' : 'var(--border)' }}>{r[m] || '-'}</td>)}
-                    <td style={{ textAlign: 'center', fontWeight: 700, background: '#f8f9fc' }}>{r.Average}</td>
+                    <td style={{ textAlign: 'center', fontWeight: 700 }}>{r.Average}</td>
                     <td style={{ textAlign: 'center', color: 'var(--text-muted)' }}>{r.Target}</td>
                   </tr>
                 ))}

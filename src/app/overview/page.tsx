@@ -1,17 +1,18 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { fetchHomeSummary, fetchCLR, formatDate } from '@/lib/data';
+import { fetchCLR, deriveHomeSummary, formatDate } from '@/lib/data';
 import type { HomeSummary, ClrRecord } from '@/types';
 import KpiCard from '@/components/KpiCard';
 import StatusBadge from '@/components/StatusBadge';
 import ApplicationDrawer from '@/components/ApplicationDrawer';
+import PdfExportButton from '@/components/PdfExportButton';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend, CartesianGrid
 } from 'recharts';
 import { 
   AlertTriangle, Activity, Sparkles, FilterX,
-  Layers, PlayCircle, CalendarDays, Clock, CheckCircle2, Inbox, PauseCircle
+  Layers, PlayCircle, CalendarDays, Calendar, Clock, CheckCircle2, Inbox, PauseCircle
 } from 'lucide-react';
 
 // Brand rainbow palette for charts/pie — in brand order
@@ -29,8 +30,10 @@ export default function OverviewPage() {
   const [perPage, setPerPage] = useState(10);
 
   useEffect(() => { 
-    fetchHomeSummary().then(setData); 
-    fetchCLR().then(setRecords);
+    fetchCLR().then(clrData => {
+      setRecords(clrData);
+      setData(deriveHomeSummary(clrData));
+    });
   }, []);
 
   if (!data || !records.length) return <div className="page-body"><div className="spinner-wrap"><div className="spinner"/></div></div>;
@@ -41,7 +44,6 @@ export default function OverviewPage() {
     { name: 'On Hold', value: data.OnHoldApplications },
     { name: 'Pipeline', value: data.PipelineApplications },
     { name: 'N-Active', value: data.NActiveApplications },
-    { name: 'Cancelled', value: data.CancelledApplications },
   ].filter(d => d.value > 0);
 
   const generateInsight = () => {
@@ -73,15 +75,78 @@ export default function OverviewPage() {
   let fullData = [];
   let tableTitle = '';
   if (filterStatus) {
-    fullData = records.filter(r => r.ApplicationStatus === filterStatus);
-    tableTitle = `Filtered View: ${filterStatus} Applications`;
+    if (STATUS_KEYS.includes(filterStatus)) {
+      fullData = records.filter(r => r.ApplicationStatus === filterStatus);
+      tableTitle = `Filtered View: ${filterStatus} Applications`;
+    } else if (['On Track', 'At Risk', 'Behind'].includes(filterStatus)) {
+      fullData = records.filter(r => r.OverallStatus === filterStatus);
+      tableTitle = `Filtered View: ${filterStatus} Applications`;
+    } else if (filterStatus === 'Total Applications') {
+      fullData = records;
+      tableTitle = 'All Applications';
+    } else if (filterStatus === 'This Month Approvals') {
+      const now = new Date();
+      const pfx = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+      fullData = records.filter(r => r.ApplicationStatus === 'Closed' && r.MilestoneDueDate?.startsWith(pfx));
+      tableTitle = 'Filtered View: This Month Approvals';
+    } else if (filterStatus === 'Next Month Expected') {
+      const nm = new Date();
+      nm.setMonth(nm.getMonth() + 1);
+      const npfx = `${nm.getFullYear()}-${String(nm.getMonth() + 1).padStart(2, '0')}`;
+      fullData = records.filter(r => r.ApplicationStatus === 'Active' && r.MilestoneDueDate?.startsWith(npfx));
+      tableTitle = 'Filtered View: Expected Next Month';
+    } else {
+      fullData = records;
+      tableTitle = 'All Applications';
+    }
   } else {
-    fullData = records.filter(r => ['At Risk', 'Behind'].includes(r.OverallStatus));
-    tableTitle = 'Applications Requiring Attention';
+    fullData = records;
+    tableTitle = 'All Applications';
   }
 
   const totalPages = Math.ceil(fullData.length / perPage);
   const tableData = fullData.slice(page * perPage, (page + 1) * perPage);
+
+  // Compute dynamic bar chart data (Monthly Distribution)
+  const monthCounts: Record<string, number> = {};
+  
+  // Temporal metrics
+  const now = new Date();
+  const currentMonthStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+  const currentYearStr = `${now.getFullYear()}`;
+  
+  // Pre-fill monthCounts with Jan-Dec of current year
+  for (let i = 1; i <= 12; i++) {
+    monthCounts[`${currentYearStr}-${String(i).padStart(2, '0')}`] = 0;
+  }
+  
+  let tillPreviousMonth = 0;
+  let currentMonthCount = 0;
+  let restOfYear = 0;
+
+  fullData.forEach(r => {
+    const dateStr = r.ApplicationStatus === 'Closed' ? (r as any).ApprovalDate || r.MilestoneDueDate : r.MilestoneDueDate;
+    if (!dateStr) return;
+    
+    const m = dateStr.substring(0, 7); // YYYY-MM
+    monthCounts[m] = (monthCounts[m] || 0) + 1;
+    
+    if (m < currentMonthStr) {
+      tillPreviousMonth++;
+    } else if (m === currentMonthStr) {
+      currentMonthCount++;
+    } else if (m > currentMonthStr && dateStr.startsWith(currentYearStr)) {
+      restOfYear++;
+    }
+  });
+
+  const dynamicMonthData = Object.keys(monthCounts).sort().map(k => {
+    const d = new Date(k + '-01');
+    return {
+      Month: d.toLocaleString('en-GB', { month: 'short', year: '2-digit' }),
+      Count: monthCounts[k]
+    };
+  }).slice(-12);
 
   return (
     <div className="page-body fade-in">
@@ -91,7 +156,14 @@ export default function OverviewPage() {
           <div className="topbar-subtitle">Health Research Authority · Live Application Tracking</div>
         </div>
         <div className="topbar-right">
-          <Activity size={16} color="var(--text-muted)" />
+          <PdfExportButton targetId="pdf-content" filename="Operations_Overview" />
+          {filterStatus && (
+            <button className="btn btn-outline" style={{ fontSize: 13, padding: '6px 14px', marginRight: 16, borderColor: 'var(--border)' }} onClick={() => { setFilterStatus(''); setPage(0); }}>
+              <FilterX size={16} style={{ marginRight: 6, color: 'var(--danger)' }} />
+              Reset Filters
+            </button>
+          )}
+          <Activity size={16} color="var(--text-muted)" style={{ marginLeft: 16 }} />
           <span className="last-updated">Last updated: {data.LastUpdated}</span>
         </div>
       </div>
@@ -99,29 +171,33 @@ export default function OverviewPage() {
       <div style={{ padding: 24 }}>
         
         {/* ── BENTO BOX LAYOUT ── */}
-        <div className="bento-layout fade-in">
-          
-          {/* LEFT COLUMN: Main KPIs + Secondary KPIs + Bar Chart */}
-          <div className="bento-left">
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
-              <KpiCard label="Total Applications" value={data.TotalApplications} accent="accent" sub="All statuses" delay={0} icon={<Layers size={18}/>} />
-              <KpiCard label="Active (In Progress)" value={data.ActiveApplications} accent="success" sub="Currently running" delay={60} icon={<PlayCircle size={18}/>} />
-              <KpiCard label="This Month Approvals" value={data.ThisMonthApprovals} accent="warning" sub="Approved this month" delay={120} icon={<CalendarDays size={18}/>} />
-              <KpiCard label="Avg Turnaround" value={`${data.AvgCycleTimeDays}d`} accent="info" sub="Days to approval" delay={180} icon={<Clock size={18}/>} />
+        <div id="pdf-content" className="bento-layout fade-in" style={{ display: 'flex', flexDirection: 'column', gap: 24, paddingBottom: 24, backgroundColor: 'var(--bg-main)' }}>
+          {/* TOP ROW: 5 Status KPIs */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 16 }}>
+              <KpiCard label="Active" value={data.ActiveApplications} accent="success" delay={0} icon={<PlayCircle size={18}/>} onClick={() => setFilterStatus('Active')} isSelected={filterStatus === 'Active'} />
+              <KpiCard label="Closed" value={data.ClosedApplications} accent="success" delay={30} icon={<CheckCircle2 size={18}/>} onClick={() => setFilterStatus('Closed')} isSelected={filterStatus === 'Closed'} />
+              <KpiCard label="Pipeline" value={data.PipelineApplications} accent="info" delay={60} icon={<Inbox size={18}/>} onClick={() => setFilterStatus('Pipeline')} isSelected={filterStatus === 'Pipeline'} />
+              <KpiCard label="On-Hold" value={data.OnHoldApplications} accent="purple" delay={90} icon={<PauseCircle size={18}/>} onClick={() => setFilterStatus('On Hold')} isSelected={filterStatus === 'On Hold'} />
+              <KpiCard label="Inactive" value={data.NActiveApplications} accent="orange" delay={120} icon={<Activity size={18}/>} onClick={() => setFilterStatus('N-Active')} isSelected={filterStatus === 'N-Active'} />
             </div>
             
+            {/* SECOND ROW: Temporal KPIs */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
-              <KpiCard label="Closed" value={data.ClosedApplications} accent="success" delay={60} icon={<CheckCircle2 size={18}/>} />
-              <KpiCard label="Pipeline" value={data.PipelineApplications} accent="info" delay={90} icon={<Inbox size={18}/>} />
-              <KpiCard label="On Hold" value={data.OnHoldApplications} accent="purple" delay={120} icon={<PauseCircle size={18}/>} />
-              <KpiCard label="N-Active" value={data.NActiveApplications} accent="orange" delay={150} icon={<Activity size={18}/>} />
+              <KpiCard label="Till Previous Month" value={tillPreviousMonth} accent="info" sub="All past volume" delay={150} icon={<Clock size={18}/>} />
+              <KpiCard label="Current Month" value={currentMonthCount} accent="warning" sub={new Date().toLocaleString('en-GB', { month: 'long', year: 'numeric' })} delay={180} icon={<CalendarDays size={18}/>} />
+              <KpiCard label="Rest of the Year" value={restOfYear} accent="purple" sub="Upcoming this year" delay={210} icon={<Calendar size={18}/>} />
+              <KpiCard label="Total Applications" value={fullData.length} accent="accent" sub="All time volume" delay={240} icon={<Layers size={18}/>} />
             </div>
 
-            <div className="card chart-card" style={{ flex: 1 }}>
-              <div className="card-header"><div className="card-title">Monthly Approvals — Last 12 Months</div></div>
+          {/* BOTTOM ROW: Charts */}
+          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 24 }}>
+            
+            {/* Bar Chart */}
+            <div className="card chart-card" style={{ flex: 1, minHeight: 400 }}>
+              <div className="card-header"><div className="card-title">{filterStatus ? `Monthly Distribution (${filterStatus})` : 'Monthly Approvals — Last 12 Months'} </div></div>
               <div className="card-body" style={{ height: 320 }}>
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={data.MonthlyApprovals} margin={{ top: 10, right: 10, bottom: 0, left: -15 }}>
+                  <BarChart data={filterStatus ? dynamicMonthData : data.MonthlyApprovals} margin={{ top: 10, right: 10, bottom: 0, left: -15 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={true} horizontal={true} stroke="rgba(0,0,0,0.15)" />
                     <XAxis dataKey="Month" tick={{ fontSize: 11, fill: 'var(--text-muted)' }} axisLine={false} tickLine={false} dy={10} />
                     <YAxis tick={{ fontSize: 11, fill: 'var(--text-muted)' }} allowDecimals={false} axisLine={false} tickLine={false} dx={-10} />
@@ -129,36 +205,6 @@ export default function OverviewPage() {
                     <Bar dataKey="Count" fill="rgba(14, 129, 198, 0.6)" barSize={48} radius={[6, 6, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
-              </div>
-            </div>
-          </div>
-
-          {/* RIGHT COLUMN: Tracker + Donut Chart */}
-          <div className="bento-right">
-
-            {/* Next Month Expected Tracker */}
-            <div className="kpi-card info" style={{ animationDelay: '180ms', padding: '24px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-                <div className="kpi-label">Next Month Expected</div>
-                <div className="icon-box info"><Activity size={18} /></div>
-              </div>
-              <div className="kpi-value" style={{ marginBottom: '24px' }}>{data.NextMonthApprovals}</div>
-              
-              <div style={{ display: 'flex', gap: 14, paddingTop: 16, borderTop: '1px solid rgba(0,0,0,0.06)' }}>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Track</div>
-                  <div style={{ fontSize: 18, fontWeight: 800, color: '#1E661E' }}>{data.OnTrackCount}</div>
-                </div>
-                <div style={{ width: 1, background: 'rgba(0,0,0,0.06)' }} />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Risk</div>
-                  <div style={{ fontSize: 18, fontWeight: 800, color: '#B45309' }}>{data.AtRiskCount}</div>
-                </div>
-                <div style={{ width: 1, background: 'rgba(0,0,0,0.06)' }} />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Behind</div>
-                  <div style={{ fontSize: 18, fontWeight: 800, color: '#C2410C' }}>{data.BehindCount}</div>
-                </div>
               </div>
             </div>
 
@@ -186,7 +232,7 @@ export default function OverviewPage() {
                     </PieChart>
                   </ResponsiveContainer>
                   {/* Center Total Text */}
-                  <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', pointerEvents: 'none' }}>
+                  <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
                     <div style={{ fontSize: 26, fontWeight: 800, color: 'var(--text)', letterSpacing: '-1px' }}>{data.TotalApplications}</div>
                     <div style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.5px' }}>Total</div>
                   </div>
