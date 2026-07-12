@@ -1,5 +1,6 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import type { ClrRecord } from '@/types';
 import StatusBadge from './StatusBadge';
 import { X, Calendar, User, Building, ArrowRight } from 'lucide-react';
@@ -11,6 +12,12 @@ interface ApplicationDrawerProps {
 }
 
 export default function ApplicationDrawer({ application, onClose }: ApplicationDrawerProps) {
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Prevent body scroll when open
   useEffect(() => {
     if (application) document.body.style.overflow = 'hidden';
@@ -18,7 +25,7 @@ export default function ApplicationDrawer({ application, onClose }: ApplicationD
     return () => { document.body.style.overflow = 'auto'; };
   }, [application]);
 
-  if (!application) return null;
+  if (!application || !mounted) return null;
 
   const getMilestoneState = (milestone: string, isDone: boolean, isActive: boolean) => {
     if (isDone) return 'done';
@@ -34,7 +41,7 @@ export default function ApplicationDrawer({ application, onClose }: ApplicationD
     { label: 'Approval Decision', date: application.ApprovalDate, done: !!application.ApprovalDate, active: false }
   ];
 
-  return (
+  return createPortal(
     <>
       <div className="drawer-overlay" onClick={onClose} />
       <div className="drawer-content">
@@ -115,6 +122,7 @@ export default function ApplicationDrawer({ application, onClose }: ApplicationD
           </div>
         </div>
       </div>
-    </>
+    </>,
+    document.body
   );
 }
