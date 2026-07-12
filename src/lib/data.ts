@@ -77,6 +77,8 @@ export function deriveHomeSummary(clr: ClrRecord[]): HomeSummary {
     OnTrackCount: clr.filter(r => r.OverallStatus === 'On Track').length,
     AtRiskCount: clr.filter(r => r.OverallStatus === 'At Risk').length,
     BehindCount: clr.filter(r => r.OverallStatus === 'Behind').length,
+    CycleTimeByType: [],
+    AtRiskApplications: [],
     MonthlyApprovals: monthlyApprovals,
     LastUpdated: now.toISOString().substring(0, 16).replace('T', ' ')
   };

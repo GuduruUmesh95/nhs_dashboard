@@ -38,9 +38,9 @@ export async function GET(request: Request) {
       
       // Isolate the target by hiding all elements outside its direct ancestry tree.
       // This preserves the exact CSS grid/flex wrappers from the parents without destroying the DOM.
-      let current = target;
+      let current: HTMLElement | null = target;
       while (current && current !== document.body) {
-        const parent = current.parentElement;
+        const parent: HTMLElement | null = current.parentElement;
         if (parent) {
           // Force ancestors to expand fully so they don't clip content during print
           parent.style.setProperty('overflow', 'visible', 'important');
@@ -49,7 +49,7 @@ export async function GET(request: Request) {
           
           Array.from(parent.children).forEach(sibling => {
             if (sibling !== current) {
-              sibling.style.setProperty('display', 'none', 'important');
+              (sibling as HTMLElement).style.setProperty('display', 'none', 'important');
             }
           });
         }
@@ -93,7 +93,7 @@ export async function GET(request: Request) {
     await browser.close();
 
     // Send the binary PDF buffer as a forced download attachment
-    return new NextResponse(pdfBuffer, {
+    return new NextResponse(pdfBuffer as unknown as BodyInit, {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
