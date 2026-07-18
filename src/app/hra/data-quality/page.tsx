@@ -11,30 +11,30 @@ const qualityDimensions = [
 ];
 
 const lineageFlow = [
-  { name: 'Pega CRM', layer: 'Source', color: '#6366F1', icon: '⚙️' },
+  { name: 'IRAS System', layer: 'Source', color: '#6366F1', icon: '⚙️' },
   { name: 'ADF Pipeline', layer: 'Ingest', color: '#0078D4', icon: '🔄' },
   { name: 'Bronze Layer\n(ADLS Gen2)', layer: 'Raw', color: '#B45309', icon: '🥉' },
   { name: 'Spark Transform\n(Silver Layer)', layer: 'Process', color: '#8B5CF6', icon: '⚗️' },
-  { name: 'FactBooking\n(Gold Layer)', layer: 'Serve', color: '#D97706', icon: '🥇' },
+  { name: 'FactStudy\n(Gold Layer)', layer: 'Serve', color: '#D97706', icon: '🥇' },
   { name: 'Power BI\nSemantic Model', layer: 'Publish', color: '#F2C811', icon: '📐' },
   { name: 'Executive\nDashboard', layer: 'Consume', color: '#22C55E', icon: '📊' },
 ];
 
 const metadataCatalog = [
-  { asset: 'FactBooking', type: 'Gold Table', owner: 'Data Engineering', classification: 'Confidential', lastUpdated: '2 min ago', status: 'Certified', rowCount: '284.3M', lineage: 3 },
-  { asset: 'DimCustomer', type: 'Gold Table', owner: 'Data Engineering', classification: 'Confidential', lastUpdated: '15 min ago', status: 'Certified', rowCount: '1.8M', lineage: 2 },
+  { asset: 'FactStudy', type: 'Gold Table', owner: 'Data Engineering', classification: 'Confidential', lastUpdated: '2 min ago', status: 'Certified', rowCount: '284.3M', lineage: 3 },
+  { asset: 'DimTrust', type: 'Gold Table', owner: 'Data Engineering', classification: 'Confidential', lastUpdated: '15 min ago', status: 'Certified', rowCount: '1.8M', lineage: 2 },
   { asset: 'DimCurrency', type: 'Gold Table', owner: 'Finance Team', classification: 'Internal', lastUpdated: '1 hour ago', status: 'Certified', rowCount: '187', lineage: 1 },
-  { asset: 'stg_pega_bookings', type: 'Silver Table', owner: 'Data Engineering', classification: 'Confidential', lastUpdated: '5 min ago', status: 'Validated', rowCount: '12.4M', lineage: 2 },
-  { asset: 'raw_sap_gl', type: 'Bronze Table', owner: 'Data Engineering', classification: 'Confidential', lastUpdated: '30 min ago', status: 'Raw', rowCount: '45.6M', lineage: 1 },
+  { asset: 'stg_iras_studies', type: 'Silver Table', owner: 'Data Engineering', classification: 'Confidential', lastUpdated: '5 min ago', status: 'Validated', rowCount: '12.4M', lineage: 2 },
+  { asset: 'raw_oracle_gl', type: 'Bronze Table', owner: 'Data Engineering', classification: 'Confidential', lastUpdated: '30 min ago', status: 'Raw', rowCount: '45.6M', lineage: 1 },
 ];
 
 const qualityRules = [
-  { rule: 'BOOKING_AMT_NOT_NULL', table: 'FactBooking', column: 'TravelAmount_USD', status: 'PASS', failures: 0, total: 284300000 },
-  { rule: 'CURRENCY_CODE_VALID', table: 'FactBooking', column: 'CurrencyKey', status: 'PASS', failures: 0, total: 284300000 },
-  { rule: 'CUSTOMER_KEY_REF_INT', table: 'FactBooking', column: 'CustomerKey', status: 'WARN', failures: 127, total: 284300000 },
-  { rule: 'DATE_IN_RANGE', table: 'FactBooking', column: 'DateKey', status: 'PASS', failures: 0, total: 284300000 },
-  { rule: 'COUNTRY_CODE_FORMAT', table: 'DimCountry', column: 'CountryCode', status: 'PASS', failures: 0, total: 152 },
-  { rule: 'CUSTOMER_NAME_NOT_BLANK', table: 'DimCustomer', column: 'CustomerName', status: 'FAIL', failures: 23, total: 1800000 },
+  { rule: 'FUNDING_AMT_NOT_NULL', table: 'FactStudy', column: 'FundingAmount', status: 'PASS', failures: 0, total: 284300000 },
+  { rule: 'CURRENCY_CODE_VALID', table: 'FactStudy', column: 'CurrencyKey', status: 'PASS', failures: 0, total: 284300000 },
+  { rule: 'TRUST_KEY_REF_INT', table: 'FactStudy', column: 'TrustKey', status: 'WARN', failures: 127, total: 284300000 },
+  { rule: 'DATE_IN_RANGE', table: 'FactStudy', column: 'DateKey', status: 'PASS', failures: 0, total: 284300000 },
+  { rule: 'REGION_CODE_FORMAT', table: 'DimRegion', column: 'RegionCode', status: 'PASS', failures: 0, total: 152 },
+  { rule: 'TRUST_NAME_NOT_BLANK', table: 'DimTrust', column: 'TrustName', status: 'FAIL', failures: 23, total: 1800000 },
 ];
 
 export default function DataQualityPage() {
@@ -53,7 +53,7 @@ export default function DataQualityPage() {
       {/* Page Header */}
       <div className="cwt-page-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>CWT Enterprise EDW</span>
+          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>HRA Data Platform</span>
           <span className="cwt-badge" style={{ background: 'rgba(34,197,94,0.2)', border: '1px solid rgba(34,197,94,0.4)', color: '#86efac' }}>Data Governance</span>
         </div>
         <h1 style={{ fontSize: 30, fontWeight: 800, margin: '0 0 8px', letterSpacing: '-0.5px', position: 'relative', zIndex: 1 }}>Data Quality, Metadata & Data Lineage</h1>

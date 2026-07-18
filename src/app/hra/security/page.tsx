@@ -2,19 +2,19 @@
 import { Shield, Lock, Eye, Users, CheckCircle2 } from 'lucide-react';
 
 const rbacMatrix = [
-  { role: 'Executive / C-Suite', icon: '👔', color: '#0078D4', bg: 'rgba(0,120,212,0.07)',
+  { role: 'HRA Executive Board', icon: '👔', color: '#0078D4', bg: 'rgba(0,120,212,0.07)',
     permissions: { executiveDash: true, operationalReports: false, rawData: false, adminPanel: false, auditLogs: false, dataExport: true, selfService: false },
-    regions: '150+ Countries', description: 'High-level KPI dashboards & summary reports only' },
-  { role: 'Regional Manager', icon: '🌍', color: '#22C55E', bg: 'rgba(34,197,94,0.07)',
+    regions: 'National Overview', description: 'High-level KPI dashboards & summary reports only' },
+  { role: 'Research Ethics Chair', icon: '📋', color: '#22C55E', bg: 'rgba(34,197,94,0.07)',
     permissions: { executiveDash: true, operationalReports: true, rawData: false, adminPanel: false, auditLogs: false, dataExport: true, selfService: true },
-    regions: 'Assigned Region Only', description: 'Full regional view — row-level security applied per region' },
-  { role: 'Data Analyst', icon: '📊', color: '#8B5CF6', bg: 'rgba(139,92,246,0.07)',
+    regions: 'Assigned Region Only', description: 'Full regional view — row-level security applied per REC' },
+  { role: 'Clinical Data Officer', icon: '📊', color: '#8B5CF6', bg: 'rgba(139,92,246,0.07)',
     permissions: { executiveDash: true, operationalReports: true, rawData: true, adminPanel: false, auditLogs: true, dataExport: true, selfService: true },
-    regions: 'Assigned scope', description: 'Access to Silver/Gold data layers and certified datasets' },
-  { role: 'Data Engineer', icon: '⚙️', color: '#F59E0B', bg: 'rgba(245,158,11,0.07)',
+    regions: 'Assigned Scope', description: 'Access to Silver/Gold data layers and certified datasets' },
+  { role: 'Health Data Engineer', icon: '⚙️', color: '#F59E0B', bg: 'rgba(245,158,11,0.07)',
     permissions: { executiveDash: false, operationalReports: false, rawData: true, adminPanel: true, auditLogs: true, dataExport: true, selfService: false },
-    regions: 'All environments', description: 'Bronze/Silver/Gold access — DevOps & pipeline management' },
-  { role: 'Auditor / Compliance', icon: '🔍', color: '#EF4444', bg: 'rgba(239,68,68,0.07)',
+    regions: 'All Environments', description: 'Bronze/Silver/Gold access — DevOps & pipeline management' },
+  { role: 'HRA Auditor & Compliance', icon: '🔍', color: '#EF4444', bg: 'rgba(239,68,68,0.07)',
     permissions: { executiveDash: false, operationalReports: true, rawData: false, adminPanel: false, auditLogs: true, dataExport: false, selfService: false },
     regions: 'Read-only — All', description: 'Full audit log access — no data modification or export' },
 ];
@@ -80,7 +80,7 @@ export default function SecurityPage() {
       {/* Page Header */}
       <div className="cwt-page-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>CWT Enterprise EDW</span>
+          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>HRA Data Platform</span>
           <span className="cwt-badge" style={{ background: 'rgba(107,33,168,0.3)', border: '1px solid rgba(167,80,255,0.4)', color: '#d8b4fe' }}>Security & Governance</span>
         </div>
         <h1 style={{ fontSize: 30, fontWeight: 800, margin: '0 0 8px', letterSpacing: '-0.5px', position: 'relative', zIndex: 1 }}>Security & Governance Layer</h1>

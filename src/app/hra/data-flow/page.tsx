@@ -4,7 +4,7 @@ import { ArrowRight, ArrowDown } from 'lucide-react';
 const stages = [
   {
     id: 'sources', label: 'Source Systems', icon: '🏢', color: '#6366F1', bg: 'rgba(99,102,241,0.08)',
-    items: ['Pega CRM', 'SAP S/4HANA', 'Salesforce', 'Legacy DBs', 'REST APIs', 'Flat Files', 'Event Streams'],
+    items: ['IRAS System', 'Oracle Financials', 'NHS Spine', 'Legacy DBs', 'REST APIs', 'Flat Files', 'Event Streams'],
     tech: 'JDBC · SFTP · REST · CDC',
     stat: '15+ Systems', statColor: '#6366F1'
   },
@@ -42,22 +42,22 @@ const stages = [
     id: 'powerbi', label: 'Power BI Dashboards', icon: '📊', color: '#F2C811', bg: 'rgba(242,200,17,0.08)',
     items: ['Executive Dashboards', 'Operational Reports', 'Self-Service Analytics', 'Embedded Reports'],
     tech: 'Power BI Premium · Paginated',
-    stat: '150+ Countries', statColor: '#F2C811'
+    stat: '100+ Trusts', statColor: '#F2C811'
   },
 ];
 
 const dataTypes = [
-  { name: 'Structured Data', desc: 'Transactional records, financial data, booking data from RDBMS sources', icon: '🗃️', examples: 'SAP · SQL Server · Oracle' },
-  { name: 'Semi-Structured', desc: 'JSON API responses, XML feeds, event payloads from streaming sources', icon: '📋', examples: 'REST APIs · Pega · Event Hubs' },
-  { name: 'Unstructured Data', desc: 'Email content, scanned documents, travel policy PDFs and images', icon: '📄', examples: 'Blob Storage · Form Recognizer' },
-  { name: 'Real-Time Streams', desc: 'Live booking events, fraud signals, travel disruption feeds', icon: '⚡', examples: 'Event Hubs · Stream Analytics' },
+  { name: 'Structured Data', desc: 'Transactional records, financial data, clinical data from RDBMS sources', icon: '🗃️', examples: 'Oracle · SQL Server · Postgres' },
+  { name: 'Semi-Structured', desc: 'JSON API responses, XML feeds, event payloads from streaming sources', icon: '📋', examples: 'REST APIs · IRAS · Event Hubs' },
+  { name: 'Unstructured Data', desc: 'Email content, scanned documents, clinical trial PDFs and images', icon: '📄', examples: 'Blob Storage · Form Recognizer' },
+  { name: 'Real-Time Streams', desc: 'Live trial enrollments, safety signals, protocol deviations', icon: '⚡', examples: 'Event Hubs · Stream Analytics' },
 ];
 
 const globalStats = [
-  { value: '150+', label: 'Countries', icon: '🌍' },
-  { value: '60+', label: 'Currencies', icon: '💱' },
-  { value: '30+', label: 'Languages', icon: '🌐' },
-  { value: '100M+', label: 'Rows / Day', icon: '📈' },
+  { value: '100+', label: 'Trusts', icon: '🏥' },
+  { value: '15+', label: 'Regions', icon: '🗺️' },
+  { value: '10M+', label: 'Patients', icon: '👥' },
+  { value: '10M+', label: 'Rows / Day', icon: '📈' },
   { value: '< 30s', label: 'Stream Latency', icon: '⚡' },
   { value: '99.9%', label: 'Data Accuracy', icon: '✅' },
 ];
@@ -78,12 +78,12 @@ export default function DataFlowPage() {
       {/* Page Header */}
       <div className="cwt-page-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>CWT Enterprise EDW</span>
+          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>HRA Data Platform</span>
           <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>End-to-End Flow</span>
         </div>
         <h1 style={{ fontSize: 30, fontWeight: 800, margin: '0 0 8px', letterSpacing: '-0.5px', position: 'relative', zIndex: 1 }}>End-to-End Data Flow</h1>
         <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.7)', maxWidth: 680, lineHeight: 1.6, position: 'relative', zIndex: 1 }}>
-          The complete journey of data — from 15+ source systems through ingestion, transformation and the gold layer, all the way to Power BI dashboards consumed across 150+ countries.
+          The complete journey of data — from 15+ source systems through ingestion, transformation and the gold layer, all the way to Power BI dashboards consumed across 100+ NHS Trusts.
         </p>
       </div>
 

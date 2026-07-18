@@ -5,11 +5,11 @@ const layers = [
   {
     id: 'source', label: 'Source Systems Layer', color: '#6366F1', bg: 'rgba(99,102,241,0.08)', border: 'rgba(99,102,241,0.2)',
     items: [
-      { name: 'Pega CRM', icon: '⚙️', desc: 'Travel requests & workflows' },
-      { name: 'SAP S/4HANA', icon: '🏢', desc: 'Finance & HR data' },
-      { name: 'Salesforce', icon: '☁️', desc: 'Customer data' },
+      { name: 'IRAS System', icon: '⚙️', desc: 'Ethics applications & approvals' },
+      { name: 'Oracle Financials', icon: '🏢', desc: 'NHS Trust funding' },
+      { name: 'NHS Spine', icon: '☁️', desc: 'Patient demographic data' },
       { name: 'Legacy Systems', icon: '🗄️', desc: 'On-premise databases' },
-      { name: 'External APIs', icon: '🔗', desc: 'FX rates, geo data' },
+      { name: 'External APIs', icon: '🔗', desc: 'Clinical registries' },
       { name: 'Flat Files', icon: '📄', desc: 'CSV, Excel, JSON feeds' },
     ]
   },
@@ -84,12 +84,12 @@ export default function ArchitecturePage() {
       {/* Page Header */}
       <div className="cwt-page-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>CWT Enterprise EDW</span>
+          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>HRA Data Platform</span>
           <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>Technical Architecture</span>
         </div>
         <h1 style={{ fontSize: 30, fontWeight: 800, margin: '0 0 8px', letterSpacing: '-0.5px', position: 'relative', zIndex: 1 }}>Enterprise Data Warehouse Architecture</h1>
         <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.7)', maxWidth: 680, lineHeight: 1.6, position: 'relative', zIndex: 1 }}>
-          A fully cloud-native, layered architecture built on Microsoft Azure and Microsoft Fabric — designed for global scale across 150+ countries, multi-currency, and multi-language data.
+          A fully cloud-native, layered architecture built on Microsoft Azure and Microsoft Fabric — designed for scale across 100+ NHS Trusts, multi-trust integration, and longitudinal patient data.
         </p>
       </div>
 

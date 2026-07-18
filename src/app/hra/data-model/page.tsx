@@ -2,37 +2,35 @@
 import { ArrowRight, Info } from 'lucide-react';
 
 // Fact Table columns
-const factBooking = {
-  name: 'FactBooking', color: '#0078D4', bg: 'rgba(0,120,212,0.06)', border: 'rgba(0,120,212,0.25)',
+const factStudy = {
+  name: 'FactStudy', color: '#0078D4', bg: 'rgba(0,120,212,0.06)', border: 'rgba(0,120,212,0.25)',
   type: 'FACT',
   columns: [
-    { name: 'BookingKey', type: 'BIGINT', pk: true },
+    { name: 'StudyKey', type: 'BIGINT', pk: true },
     { name: 'DateKey', type: 'INT', fk: true },
-    { name: 'CustomerKey', type: 'INT', fk: true },
-    { name: 'CountryKey', type: 'INT', fk: true },
+    { name: 'TrustKey', type: 'INT', fk: true },
+    { name: 'RegionKey', type: 'INT', fk: true },
     { name: 'CurrencyKey', type: 'INT', fk: true },
     { name: 'ProductKey', type: 'INT', fk: true },
     { name: 'AnalystKey', type: 'INT', fk: true },
-    { name: 'TravelAmount_USD', type: 'DECIMAL(18,2)', measure: true },
-    { name: 'TravelAmount_Local', type: 'DECIMAL(18,2)', measure: true },
+    { name: 'FundingAmount', type: 'DECIMAL(18,2)', measure: true },
+    { name: 'PatientCount', type: 'INT', measure: true },
     { name: 'ServiceFee', type: 'DECIMAL(18,2)', measure: true },
-    { name: 'BookingCount', type: 'INT', measure: true },
-    { name: 'TripDays', type: 'INT', measure: true },
+    { name: 'StudyDurationDays', type: 'INT', measure: true },
   ]
 };
 
-const factExpense = {
-  name: 'FactExpense', color: '#8B5CF6', bg: 'rgba(139,92,246,0.06)', border: 'rgba(139,92,246,0.25)',
+const factGrant = {
+  name: 'FactGrant', color: '#8B5CF6', bg: 'rgba(139,92,246,0.06)', border: 'rgba(139,92,246,0.25)',
   type: 'FACT',
   columns: [
-    { name: 'ExpenseKey', type: 'BIGINT', pk: true },
+    { name: 'GrantKey', type: 'BIGINT', pk: true },
     { name: 'DateKey', type: 'INT', fk: true },
-    { name: 'CustomerKey', type: 'INT', fk: true },
+    { name: 'TrustKey', type: 'INT', fk: true },
     { name: 'CurrencyKey', type: 'INT', fk: true },
     { name: 'CategoryKey', type: 'INT', fk: true },
-    { name: 'ExpenseAmount_USD', type: 'DECIMAL(18,2)', measure: true },
-    { name: 'ExpenseAmount_Local', type: 'DECIMAL(18,2)', measure: true },
-    { name: 'ExpenseCount', type: 'INT', measure: true },
+    { name: 'GrantAmount', type: 'DECIMAL(18,2)', measure: true },
+    { name: 'GrantCount', type: 'INT', measure: true },
     { name: 'IsApproved', type: 'BIT', measure: true },
   ]
 };
@@ -54,12 +52,12 @@ const dimensions = [
     ]
   },
   {
-    name: 'DimCustomer', color: '#22C55E', bg: 'rgba(34,197,94,0.06)', border: 'rgba(34,197,94,0.25)',
+    name: 'DimTrust', color: '#22C55E', bg: 'rgba(34,197,94,0.06)', border: 'rgba(34,197,94,0.25)',
     type: 'SCD TYPE 2',
     columns: [
-      { name: 'CustomerKey', type: 'INT', pk: true },
-      { name: 'CustomerID', type: 'NVARCHAR(50)' },
-      { name: 'CustomerName', type: 'NVARCHAR(255)' },
+      { name: 'TrustKey', type: 'INT', pk: true },
+      { name: 'TrustID', type: 'NVARCHAR(50)' },
+      { name: 'TrustName', type: 'NVARCHAR(255)' },
       { name: 'Segment', type: 'NVARCHAR(100)' },
       { name: 'Industry', type: 'NVARCHAR(100)' },
       { name: 'ContractTier', type: 'NVARCHAR(50)' },
@@ -69,12 +67,12 @@ const dimensions = [
     ]
   },
   {
-    name: 'DimCountry', color: '#14B8A6', bg: 'rgba(20,184,166,0.06)', border: 'rgba(20,184,166,0.25)',
+    name: 'DimRegion', color: '#14B8A6', bg: 'rgba(20,184,166,0.06)', border: 'rgba(20,184,166,0.25)',
     type: 'CONFORMED',
     columns: [
-      { name: 'CountryKey', type: 'INT', pk: true },
-      { name: 'CountryCode', type: 'CHAR(3)' },
-      { name: 'CountryName', type: 'NVARCHAR(100)' },
+      { name: 'RegionKey', type: 'INT', pk: true },
+      { name: 'RegionCode', type: 'CHAR(3)' },
+      { name: 'RegionName', type: 'NVARCHAR(100)' },
       { name: 'Region', type: 'NVARCHAR(50)' },
       { name: 'Continent', type: 'NVARCHAR(50)' },
       { name: 'IsEU', type: 'BIT' },
@@ -153,8 +151,8 @@ export default function DataModelPage() {
       {/* Page Header */}
       <div className="cwt-page-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>CWT Enterprise EDW</span>
-          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>Kimball Methodology</span>
+          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>HRA Data Platform</span>
+          <span className="cwt-badge" style={{ background: 'rgba(139,92,246,0.3)', border: '1px solid rgba(167,139,250,0.4)', color: '#d8b4fe' }}>Gold Layer</span>
         </div>
         <h1 style={{ fontSize: 30, fontWeight: 800, margin: '0 0 8px', letterSpacing: '-0.5px', position: 'relative', zIndex: 1 }}>Kimball Dimensional Data Model — Star Schema</h1>
         <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.7)', maxWidth: 680, lineHeight: 1.6, position: 'relative', zIndex: 1 }}>
@@ -197,7 +195,10 @@ export default function DataModelPage() {
           <div style={{ width: 32, height: 2, background: 'linear-gradient(to right, #22C55E, #0078D4)' }} />
           <ArrowRight size={14} color="#0078D4" />
         </div>
-        <TableCard table={factBooking} isCenter />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <TableCard table={factStudy} isCenter />
+          <TableCard table={factGrant} isCenter />
+        </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12, paddingTop: 40 }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <ArrowRight size={14} color="#0078D4" style={{ transform: 'scaleX(-1)' }} />
@@ -225,7 +226,7 @@ export default function DataModelPage() {
           <div style={{ width: 32, height: 2, background: 'linear-gradient(to right, #6366F1, #8B5CF6)' }} />
           <ArrowRight size={14} color="#8B5CF6" />
         </div>
-        <TableCard table={factExpense} isCenter />
+        <TableCard table={factGrant} isCenter />
       </div>
 
       {/* Kimball Principles */}

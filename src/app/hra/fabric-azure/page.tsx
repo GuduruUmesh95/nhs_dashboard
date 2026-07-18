@@ -100,13 +100,13 @@ export default function FabricAzurePage() {
       {/* Page Header */}
       <div className="cwt-page-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>CWT Enterprise EDW</span>
+          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>HRA Data Platform</span>
           <span className="cwt-badge" style={{ background: 'rgba(227,0,140,0.2)', border: '1px solid rgba(227,0,140,0.4)', color: '#E3008C' }}>Microsoft Fabric</span>
           <span className="cwt-badge" style={{ background: 'rgba(0,120,212,0.15)', border: '1px solid rgba(0,120,212,0.3)', color: '#60a5fa' }}>Azure</span>
         </div>
         <h1 style={{ fontSize: 30, fontWeight: 800, margin: '0 0 8px', letterSpacing: '-0.5px', position: 'relative', zIndex: 1 }}>Microsoft Fabric & Azure Architecture</h1>
         <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.7)', maxWidth: 680, lineHeight: 1.6, position: 'relative', zIndex: 1 }}>
-          The full Azure cloud service catalogue powering CWT's enterprise data warehouse — from ingestion and storage through to governance, AI, and visualisation.
+          The full Azure cloud service catalogue powering HRA's enterprise data platform — from ingestion and storage through to governance, AI, and visualisation.
         </p>
       </div>
 
@@ -116,7 +116,7 @@ export default function FabricAzurePage() {
           <span style={{ fontSize: 22 }}>🧩</span>
           <div>
             <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--text)' }}>Microsoft Fabric — Unified SaaS Analytics Platform</div>
-            <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>The single pane of glass for all CWT analytics workloads — from data engineering to BI reporting</div>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>The single pane of glass for all HRA analytics workloads — from data engineering to BI reporting</div>
           </div>
         </div>
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>

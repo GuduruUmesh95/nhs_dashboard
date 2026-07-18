@@ -1,34 +1,34 @@
 'use client';
 
 const kpiCards = [
-  { label: 'Total Revenue (YTD)', value: '$2.4B', change: '+12.3%', positive: true, icon: '💰', color: '#22C55E' },
-  { label: 'Active Bookings', value: '1.2M', change: '+8.7%', positive: true, icon: '✈️', color: '#0078D4' },
-  { label: 'Countries Served', value: '152', change: '+3 New', positive: true, icon: '🌍', color: '#8B5CF6' },
-  { label: 'Cost Avoidance', value: '$184M', change: '+21.4%', positive: true, icon: '💹', color: '#F59E0B' },
-  { label: 'Avg Booking Value', value: '$1,940', change: '-2.1%', positive: false, icon: '📊', color: '#EF4444' },
-  { label: 'Customer Satisfaction', value: '94.2%', change: '+1.8%', positive: true, icon: '⭐', color: '#14B8A6' },
+  { label: 'Total Funding (YTD)', value: '£2.4B', change: '+12.3%', positive: true, icon: '💰', color: '#22C55E' },
+  { label: 'Active Studies', value: '1.2K', change: '+8.7%', positive: true, icon: '🔬', color: '#0078D4' },
+  { label: 'Trusts Served', value: '152', change: '+3 New', positive: true, icon: '🏥', color: '#8B5CF6' },
+  { label: 'Cost Efficiency', value: '£184M', change: '+21.4%', positive: true, icon: '💹', color: '#F59E0B' },
+  { label: 'Avg Review Time', value: '42 Days', change: '-2.1%', positive: true, icon: '⏱️', color: '#EF4444' },
+  { label: 'Researcher Satisfaction', value: '94.2%', change: '+1.8%', positive: true, icon: '⭐', color: '#14B8A6' },
 ];
 
 const reportingDomains = [
   {
-    name: 'Finance & Revenue', icon: '💰', color: '#22C55E', bg: 'rgba(34,197,94,0.07)',
-    reports: ['P&L by Region', 'Revenue by Product', 'FX Impact Analysis', 'Budget vs Actual'],
-    refreshRate: '15 min', dataSource: 'SAP S/4HANA → Gold Layer'
+    name: 'Funding & Grants', icon: '💰', color: '#22C55E', bg: 'rgba(34,197,94,0.07)',
+    reports: ['Funding by Region', 'Grant Allocation', 'Budget vs Actual', 'Cost Analysis'],
+    refreshRate: '15 min', dataSource: 'Oracle Financials → Gold Layer'
   },
   {
-    name: 'Travel Operations', icon: '✈️', color: '#0078D4', bg: 'rgba(0,120,212,0.07)',
-    reports: ['Booking Volume Trends', 'Route Analysis', 'Supplier Performance', 'Travel Policy Compliance'],
-    refreshRate: 'Real-time', dataSource: 'Pega CRM → Gold Layer'
+    name: 'Research Operations', icon: '🔬', color: '#0078D4', bg: 'rgba(0,120,212,0.07)',
+    reports: ['Study Volumes', 'Review Timelines', 'Committee Performance', 'Ethics Approvals'],
+    refreshRate: 'Real-time', dataSource: 'IRAS System → Gold Layer'
   },
   {
-    name: 'Customer Analytics', icon: '👥', color: '#8B5CF6', bg: 'rgba(139,92,246,0.07)',
-    reports: ['Customer Segmentation', 'Retention Cohorts', 'Top Accounts Dashboard', 'NPS Tracking'],
-    refreshRate: '1 hour', dataSource: 'Salesforce → Gold Layer'
+    name: 'Participant Analytics', icon: '👥', color: '#8B5CF6', bg: 'rgba(139,92,246,0.07)',
+    reports: ['Demographic Diversity', 'Participant Retention', 'Recruitment Rates', 'Patient Feedback'],
+    refreshRate: '1 hour', dataSource: 'NHS Spine → Gold Layer'
   },
   {
-    name: 'Expense Management', icon: '🧾', color: '#EF4444', bg: 'rgba(239,68,68,0.07)',
-    reports: ['Expense by Category', 'Policy Violations', 'Approval Workflow KPIs', 'Cost Centre Breakdown'],
-    refreshRate: '30 min', dataSource: 'Concur / SAP → Gold Layer'
+    name: 'Resource Management', icon: '📋', color: '#EF4444', bg: 'rgba(239,68,68,0.07)',
+    reports: ['Resource Allocation', 'Staff Utilisation', 'Compliance Checks', 'Training Records'],
+    refreshRate: '30 min', dataSource: 'Workday → Gold Layer'
   },
 ];
 
@@ -41,19 +41,19 @@ const mockBarData = [
 
 const mockLineData = [42, 55, 48, 62, 70, 65, 78, 72, 85, 88, 91, 95];
 
-const topCountries = [
-  { country: 'United States', bookings: 284320, pct: 100 },
-  { country: 'United Kingdom', bookings: 198450, pct: 70 },
-  { country: 'Germany', bookings: 142100, pct: 50 },
-  { country: 'France', bookings: 118900, pct: 42 },
-  { country: 'Singapore', bookings: 95600, pct: 34 },
+const topRegions = [
+  { region: 'London', volume: 284320, pct: 100 },
+  { region: 'Manchester', volume: 198450, pct: 70 },
+  { region: 'Birmingham', volume: 142100, pct: 50 },
+  { region: 'Scotland', volume: 118900, pct: 42 },
+  { region: 'Wales', volume: 95600, pct: 34 },
 ];
 
 const pieSlices = [
-  { label: 'Air', pct: 42, color: '#0078D4' },
-  { label: 'Hotel', pct: 28, color: '#22C55E' },
-  { label: 'Rail', pct: 15, color: '#F59E0B' },
-  { label: 'Car', pct: 10, color: '#8B5CF6' },
+  { label: 'Clinical Trials', pct: 42, color: '#0078D4' },
+  { label: 'Observational', pct: 28, color: '#22C55E' },
+  { label: 'Registry', pct: 15, color: '#F59E0B' },
+  { label: 'Biobank', pct: 10, color: '#8B5CF6' },
   { label: 'Other', pct: 5, color: '#EF4444' },
 ];
 
@@ -77,12 +77,12 @@ export default function BiDashboardsPage() {
       {/* Page Header */}
       <div className="cwt-page-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>CWT Enterprise EDW</span>
+          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>HRA Analytics Platform</span>
           <span className="cwt-badge" style={{ background: 'rgba(242,200,17,0.2)', border: '1px solid rgba(242,200,17,0.4)', color: '#F2C811' }}>Power BI Premium</span>
         </div>
         <h1 style={{ fontSize: 30, fontWeight: 800, margin: '0 0 8px', letterSpacing: '-0.5px', position: 'relative', zIndex: 1 }}>Business Intelligence & Executive Dashboards</h1>
         <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.7)', maxWidth: 680, lineHeight: 1.6, position: 'relative', zIndex: 1 }}>
-          Power BI Premium dashboards delivering real-time insights to executives and operational teams across 150+ countries — built on certified Gold Layer datasets with full row-level security.
+          Power BI Premium dashboards delivering real-time insights to executives and operational teams across all UK regions — built on certified Gold Layer datasets with full row-level security.
         </p>
       </div>
 
@@ -109,13 +109,13 @@ export default function BiDashboardsPage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <span style={{ fontSize: 16 }}>📊</span>
             <div>
-              <div style={{ fontSize: 13, fontWeight: 700 }}>CWT Global Travel Analytics — Executive View</div>
+              <div style={{ fontSize: 13, fontWeight: 700 }}>HRA National Data — Executive View</div>
               <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)' }}>Last refreshed: Today at 09:45 UTC · Certified Dataset</div>
             </div>
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
-            {['Global', 'EMEA', 'APAC', 'Americas'].map(r => (
-              <span key={r} style={{ fontSize: 10, fontWeight: 600, padding: '3px 10px', borderRadius: 6, background: r === 'Global' ? '#0078D4' : 'rgba(255,255,255,0.1)', color: '#fff', cursor: 'pointer' }}>{r}</span>
+            {['National', 'London', 'North', 'South'].map(r => (
+              <span key={r} style={{ fontSize: 10, fontWeight: 600, padding: '3px 10px', borderRadius: 6, background: r === 'National' ? '#0078D4' : 'rgba(255,255,255,0.1)', color: '#fff', cursor: 'pointer' }}>{r}</span>
             ))}
           </div>
         </div>
@@ -123,7 +123,7 @@ export default function BiDashboardsPage() {
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 16 }}>
             {/* Bar Chart Mock */}
             <div className="bi-panel">
-              <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 12 }}>Monthly Booking Volume (USD M)</div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 12 }}>Monthly Study Volume</div>
               <div style={{ display: 'flex', gap: 4, alignItems: 'flex-end', height: 120 }}>
                 {mockBarData.map((d, i) => (
                   <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
@@ -136,7 +136,7 @@ export default function BiDashboardsPage() {
 
             {/* Donut Chart Mock */}
             <div className="bi-panel" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Spend by Category</div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Studies by Category</div>
               <div style={{ position: 'relative', width: 90, height: 90, margin: '0 auto' }}>
                 <svg viewBox="0 0 36 36" style={{ transform: 'rotate(-90deg)', width: '100%', height: '100%' }}>
                   {(() => {
@@ -151,7 +151,7 @@ export default function BiDashboardsPage() {
                     });
                   })()}
                 </svg>
-                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, color: 'var(--text)' }}>$2.4B</div>
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, color: 'var(--text)' }}>1.2K</div>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                 {pieSlices.map((s, i) => (
@@ -164,15 +164,15 @@ export default function BiDashboardsPage() {
               </div>
             </div>
 
-            {/* Top Countries */}
+            {/* Top Regions */}
             <div className="bi-panel">
-              <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 12 }}>Top Countries by Volume</div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 12 }}>Top Regions by Volume</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {topCountries.map((c, i) => (
+                {topRegions.map((c, i) => (
                   <div key={i}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
-                      <span style={{ fontSize: 11, color: 'var(--text)', fontWeight: 600 }}>{c.country}</span>
-                      <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{(c.bookings / 1000).toFixed(0)}K</span>
+                      <span style={{ fontSize: 11, color: 'var(--text)', fontWeight: 600 }}>{c.region}</span>
+                      <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{(c.volume / 1000).toFixed(0)}K</span>
                     </div>
                     <div style={{ height: 5, background: '#E8EDF5', borderRadius: 3 }}>
                       <div style={{ height: '100%', width: `${c.pct}%`, background: '#0078D4', borderRadius: 3 }} />

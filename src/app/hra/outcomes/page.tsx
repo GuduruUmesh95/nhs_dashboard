@@ -2,7 +2,7 @@
 import { TrendingUp, CheckCircle2 } from 'lucide-react';
 
 const heroMetrics = [
-  { value: '150+', label: 'Countries', sub: 'Global single platform', icon: '🌍', color: '#0078D4', bg: 'rgba(0,120,212,0.08)' },
+  { value: '100+', label: 'Trusts', sub: 'National single platform', icon: '🏥', color: '#0078D4', bg: 'rgba(0,120,212,0.08)' },
   { value: '40%', label: 'Faster Reporting', sub: 'vs manual processes', icon: '⚡', color: '#22C55E', bg: 'rgba(34,197,94,0.08)' },
   { value: '$2M+', label: 'Annual Savings', sub: 'Infrastructure & ops', icon: '💰', color: '#F59E0B', bg: 'rgba(245,158,11,0.08)' },
   { value: '99.9%', label: 'Data Accuracy', sub: 'Gold layer certified', icon: '🎯', color: '#8B5CF6', bg: 'rgba(139,92,246,0.08)' },
@@ -25,17 +25,17 @@ const benefits = [
     items: [
       '$2M+ annual infrastructure savings vs on-premise data warehouse',
       '40% reduction in reporting overhead across all global regions',
-      'Real-time cost visibility enabling $184M in travel cost avoidance decisions',
+      'Real-time cost visibility enabling £18M in operational cost avoidance decisions',
       'Eliminated 6 legacy reporting tools — consolidated to single Power BI platform',
     ]
   },
   {
-    category: 'Global Scale & Reach', color: '#8B5CF6', icon: '🌍',
+    category: 'National Scale & Reach', color: '#8B5CF6', icon: '🌍',
     items: [
-      'Single platform serving 150+ countries with regional data sovereignty compliance',
-      'Multi-currency engine handling 60+ currencies with automated FX conversion',
-      'Multi-language data normalisation across 30+ languages using Azure AI',
-      'Pega integration delivers real-time booking data to 500+ Power BI users globally',
+      'Single platform serving 100+ NHS Trusts with regional data governance compliance',
+      'Multi-region data standardisation across 15+ ICS regions',
+      'Clinical code normalisation (SNOMED CT / ICD-10) using Azure AI',
+      'IRAS integration delivers real-time clinical trial data to 500+ Power BI users nationally',
     ]
   },
   {
@@ -69,10 +69,10 @@ const benefits = [
 
 const milestones = [
   { phase: 'Phase 1', title: 'Foundation & Discovery', duration: 'Months 1–2', status: 'complete', items: ['Architecture design', 'Source system inventory', 'Azure environment setup', 'Stakeholder alignment'] },
-  { phase: 'Phase 2', title: 'Core Ingestion', duration: 'Months 3–5', status: 'complete', items: ['ADF pipelines built', 'Bronze layer live', 'Pega integration', 'SAP connectivity'] },
+  { phase: 'Phase 2', title: 'Core Ingestion', duration: 'Months 3–5', status: 'complete', items: ['ADF pipelines built', 'Bronze layer live', 'IRAS integration', 'Oracle connectivity'] },
   { phase: 'Phase 3', title: 'Data Modelling', duration: 'Months 5–7', status: 'complete', items: ['Kimball star schema', 'Silver layer logic', 'Gold layer published', 'Quality gates live'] },
   { phase: 'Phase 4', title: 'BI & Dashboards', duration: 'Months 7–9', status: 'complete', items: ['Power BI semantic model', 'Executive dashboards', 'RBAC & RLS applied', 'UAT with 50 users'] },
-  { phase: 'Phase 5', title: 'Global Rollout', duration: 'Months 9–12', status: 'complete', items: ['150+ countries live', '500+ users onboarded', 'Training delivered', 'Support BAU'] },
+  { phase: 'Phase 5', title: 'National Rollout', duration: 'Months 9–12', status: 'complete', items: ['100+ Trusts live', '500+ users onboarded', 'Training delivered', 'Support BAU'] },
 ];
 
 const techStack = [
@@ -83,7 +83,7 @@ const techStack = [
   { name: 'Power BI Premium', role: 'Business Intelligence', icon: '📊' },
   { name: 'Microsoft Purview', role: 'Governance', icon: '🏛️' },
   { name: 'Azure Active Directory', role: 'Identity & Security', icon: '🔐' },
-  { name: 'Pega', role: 'Source System', icon: '⚙️' },
+  { name: 'IRAS System', role: 'Source System', icon: '⚙️' },
 ];
 
 export default function OutcomesPage() {
@@ -105,12 +105,12 @@ export default function OutcomesPage() {
       {/* Page Header */}
       <div className="cwt-page-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>CWT Enterprise EDW</span>
+          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>HRA Data Platform</span>
           <span className="cwt-badge" style={{ background: 'rgba(34,197,94,0.2)', border: '1px solid rgba(34,197,94,0.4)', color: '#86efac' }}>Delivered by The Visionarys</span>
         </div>
         <h1 style={{ fontSize: 30, fontWeight: 800, margin: '0 0 8px', letterSpacing: '-0.5px', position: 'relative', zIndex: 1 }}>Business Outcomes & Benefits</h1>
         <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.7)', maxWidth: 680, lineHeight: 1.6, position: 'relative', zIndex: 1 }}>
-          The measurable impact of CWT's enterprise data transformation — from fragmented manual processes to a world-class, cloud-native data platform serving 150+ countries with automated, real-time intelligence.
+          The measurable impact of HRA's enterprise data transformation — from fragmented manual processes to a world-class, cloud-native data platform serving 100+ NHS Trusts with automated, real-time intelligence.
         </p>
       </div>
 

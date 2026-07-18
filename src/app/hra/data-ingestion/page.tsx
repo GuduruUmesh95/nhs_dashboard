@@ -3,9 +3,9 @@ import React from 'react';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 
 const sources = [
-  { name: 'Pega CRM', icon: '⚙️', type: 'Application', color: '#6366F1' },
-  { name: 'SAP S/4HANA', icon: '🏢', type: 'ERP', color: '#0078D4' },
-  { name: 'Salesforce', icon: '☁️', type: 'CRM', color: '#00A1E0' },
+  { name: 'IRAS System', icon: '⚙️', type: 'Application', color: '#6366F1' },
+  { name: 'Oracle Financials', icon: '🏢', type: 'ERP', color: '#0078D4' },
+  { name: 'NHS Spine', icon: '☁️', type: 'Clinical', color: '#00A1E0' },
   { name: 'Legacy RDBMS', icon: '🗄️', type: 'Database', color: '#64748B' },
   { name: 'Flat Files / SFTP', icon: '📄', type: 'Batch', color: '#8B5CF6' },
   { name: 'REST APIs / FX', icon: '🔗', type: 'Real-Time', color: '#F59E0B' },
@@ -60,7 +60,7 @@ const pipelineTypes = [
     icon: '⚡',
     color: '#EF4444',
     tools: 'Azure Event Hubs · Stream Analytics · Fabric Real-Time Analytics',
-    useCases: ['Live booking events from Pega', 'Real-time fraud signal detection', 'Travel disruption alerts'],
+    useCases: ['Live trial enrollments from IRAS', 'Real-time safety signal detection', 'Protocol deviation alerts'],
     schedule: 'Continuous streaming',
     latency: 'Latency: <30 seconds',
   },
@@ -69,7 +69,7 @@ const pipelineTypes = [
     icon: '🔁',
     color: '#8B5CF6',
     tools: 'Azure Data Factory · Debezium · SQL Change Tracking',
-    useCases: ['Incremental loads from SAP & Salesforce', 'Detect record updates & deletes', 'Reduce pipeline load vs full refresh'],
+    useCases: ['Incremental loads from Oracle & Spine', 'Detect record updates & deletes', 'Reduce pipeline load vs full refresh'],
     schedule: 'Micro-batch: Every 15 mins',
     latency: 'Latency: ~15–20 mins',
   },
@@ -78,7 +78,7 @@ const pipelineTypes = [
     icon: '🔗',
     color: '#F59E0B',
     tools: 'Azure Logic Apps · ADF Copy Activity · SFTP Connector',
-    useCases: ['FX rate feeds (daily multi-currency)', 'Third-party travel content', 'Government regulatory file drops'],
+    useCases: ['FX rate feeds (daily multi-currency)', 'Third-party clinical content', 'Government regulatory file drops'],
     schedule: 'Event-driven / Scheduled',
     latency: 'Latency: Variable',
   },
@@ -114,12 +114,12 @@ export default function DataIngestionPage() {
       {/* Page Header */}
       <div className="cwt-page-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>CWT Enterprise EDW</span>
+          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>HRA Data Platform</span>
           <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>Data Engineering</span>
         </div>
         <h1 style={{ fontSize: 30, fontWeight: 800, margin: '0 0 8px', letterSpacing: '-0.5px', position: 'relative', zIndex: 1 }}>Data Ingestion & ETL/ELT Pipeline</h1>
         <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.7)', maxWidth: 680, lineHeight: 1.6, position: 'relative', zIndex: 1 }}>
-          Automated ingestion from 15+ source systems including Pega, SAP & Salesforce — supporting batch ETL, real-time streaming, and CDC patterns across 150+ countries.
+          Automated ingestion from 15+ source systems including IRAS, Oracle & NHS Spine — supporting batch ETL, real-time streaming, and CDC patterns across 100+ NHS Trusts.
         </p>
       </div>
 

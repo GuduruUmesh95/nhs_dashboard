@@ -33,17 +33,17 @@ const NAV: NavItem[] = [
   { label: 'Approval Turnaround Analysis', href: '/turnaround-analysis', icon: <Clock size={15} /> },
 ];
 
-const CWT_NAV: NavItem[] = [
-  { label: 'Process Flow', href: '/cwt/process-flow', icon: <ArrowRightLeft size={15} /> },
-  { label: 'EDW Architecture', href: '/cwt/architecture', icon: <Layers size={15} /> },
-  { label: 'Microsoft Fabric & Azure', href: '/cwt/fabric-azure', icon: <Database size={15} /> },
-  { label: 'Data Ingestion & ETL/ELT', href: '/cwt/data-ingestion', icon: <Zap size={15} /> },
-  { label: 'Kimball Star Schema', href: '/cwt/data-model', icon: <GitBranch size={15} /> },
-  { label: 'End-to-End Data Flow', href: '/cwt/data-flow', icon: <TrendingUp size={15} /> },
-  { label: 'Security & Governance', href: '/cwt/security', icon: <Shield size={15} /> },
-  { label: 'BI & Executive Dashboards', href: '/cwt/bi-dashboards', icon: <BarChart3 size={15} /> },
-  { label: 'Data Quality & Lineage', href: '/cwt/data-quality', icon: <Search size={15} /> },
-  { label: 'Business Outcomes', href: '/cwt/outcomes', icon: <Award size={15} /> },
+const HRA_NAV: NavItem[] = [
+  { label: 'Process Flow', href: '/hra/process-flow', icon: <ArrowRightLeft size={15} /> },
+  { label: 'EDW Architecture', href: '/hra/architecture', icon: <Layers size={15} /> },
+  { label: 'Microsoft Fabric & Azure', href: '/hra/fabric-azure', icon: <Database size={15} /> },
+  { label: 'Data Ingestion & ETL/ELT', href: '/hra/data-ingestion', icon: <Zap size={15} /> },
+  { label: 'Kimball Star Schema', href: '/hra/data-model', icon: <GitBranch size={15} /> },
+  { label: 'End-to-End Data Flow', href: '/hra/data-flow', icon: <TrendingUp size={15} /> },
+  { label: 'Security & Governance', href: '/hra/security', icon: <Shield size={15} /> },
+  { label: 'BI & Executive Dashboards', href: '/hra/bi-dashboards', icon: <BarChart3 size={15} /> },
+  { label: 'Data Quality & Lineage', href: '/hra/data-quality', icon: <Search size={15} /> },
+  { label: 'Business Outcomes', href: '/hra/outcomes', icon: <Award size={15} /> },
 ];
 
 export default function Sidebar() {
@@ -148,12 +148,10 @@ export default function Sidebar() {
           );
         })}
 
-        <div className="sidebar-divider" style={{ marginTop: 16 }} />
-
         {/* NHS HRA Prototype Section */}
         <div style={{ padding: '12px 18px 6px' }}>
           <div style={{
-            background: 'linear-gradient(90deg, rgba(0,120,212,0.18) 0%, rgba(0,120,212,0.04) 100%)',
+            background: 'linear-gradient(90deg, rgba(0,120,212,0.18) 0, rgba(0,120,212,0.04) 100%)',
             borderLeft: '2px solid #0078D4',
             padding: '7px 12px', borderRadius: '0 6px 6px 0',
             color: '#fff', fontSize: 10.5, fontWeight: 700, letterSpacing: '0.8px',
@@ -165,7 +163,7 @@ export default function Sidebar() {
         </div>
 
         <div className="sidebar-section-label" style={{ marginTop: 4 }}>Data Engineering</div>
-        {CWT_NAV.map(item => (
+        {HRA_NAV.map(item => (
           <Link
             key={item.href}
             href={item.href!}

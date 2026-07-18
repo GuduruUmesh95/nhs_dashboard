@@ -2,29 +2,29 @@
 import { ArrowRight, CheckCircle2, XCircle, Zap, Globe, Users, BarChart3, Database, RefreshCw, Clock, AlertTriangle, TrendingUp } from 'lucide-react';
 
 const currentState = [
-  { icon: <XCircle size={16} className="text-red-500" />, title: 'Manual Data Extraction', desc: 'Teams manually export data from Pega, SAP & legacy systems into spreadsheets daily', color: '#EF4444' },
+  { icon: <XCircle size={16} className="text-red-500" />, title: 'Manual Data Extraction', desc: 'Teams manually export data from IRAS, Oracle & legacy systems into spreadsheets daily', color: '#EF4444' },
   { icon: <XCircle size={16} />, title: 'Siloed Data Sources', desc: '15+ disconnected source systems with no unified view — each region maintaining separate reports', color: '#EF4444' },
-  { icon: <XCircle size={16} />, title: 'Multi-Currency Chaos', desc: 'Currency conversions done manually in Excel across 150+ countries with no standardisation', color: '#EF4444' },
-  { icon: <XCircle size={16} />, title: 'No Single Source of Truth', desc: 'Finance, Operations & HR teams working from different versions of data — conflicting KPIs', color: '#EF4444' },
+  { icon: <XCircle size={16} />, title: 'Multi-Region Chaos', desc: 'Data conversions done manually in Excel across 100+ NHS Trusts with no standardisation', color: '#EF4444' },
+  { icon: <XCircle size={16} />, title: 'No Single Source of Truth', desc: 'Finance, Operations & Clinical teams working from different versions of data — conflicting KPIs', color: '#EF4444' },
   { icon: <XCircle size={16} />, title: 'Delayed Reporting Cycles', desc: 'Monthly reports taking 3–5 days to compile. Executive decks prepared manually every quarter', color: '#EF4444' },
   { icon: <XCircle size={16} />, title: 'No Governance Framework', desc: 'No data lineage, audit trails, or role-based access control — compliance risk across all regions', color: '#EF4444' },
-  { icon: <XCircle size={16} />, title: 'Limited Scalability', desc: 'On-premise infrastructure unable to scale for growing transaction volumes and new markets', color: '#EF4444' },
-  { icon: <XCircle size={16} />, title: 'Multi-Language Barriers', desc: 'Unstructured data in 30+ languages with no automated translation or standardisation pipeline', color: '#EF4444' },
+  { icon: <XCircle size={16} />, title: 'Limited Scalability', desc: 'On-premise infrastructure unable to scale for growing transaction volumes and new trusts', color: '#EF4444' },
+  { icon: <XCircle size={16} />, title: 'Clinical Coding Barriers', desc: 'Unstructured clinical text with no automated standardisation or extraction pipeline', color: '#EF4444' },
 ];
 
 const futureState = [
   { icon: <CheckCircle2 size={16} />, title: 'Automated ETL/ELT Pipelines', desc: 'Azure Data Factory orchestrates 200+ automated pipelines — zero manual extraction required', color: '#22C55E' },
   { icon: <CheckCircle2 size={16} />, title: 'Unified Enterprise Data Warehouse', desc: 'Single Azure Synapse Analytics warehouse integrating all source systems in real-time', color: '#22C55E' },
-  { icon: <CheckCircle2 size={16} />, title: 'Automated Multi-Currency Engine', desc: 'Real-time currency conversion for 150+ countries via automated FX rate integration', color: '#22C55E' },
+  { icon: <CheckCircle2 size={16} />, title: 'Automated Multi-Region Aggregation', desc: 'Real-time data aggregation for 100+ NHS Trusts via automated integration', color: '#22C55E' },
   { icon: <CheckCircle2 size={16} />, title: 'Single Source of Truth', desc: 'Gold-layer Kimball dimensional model ensuring every team works from the same validated data', color: '#22C55E' },
   { icon: <CheckCircle2 size={16} />, title: 'Real-Time Power BI Dashboards', desc: 'Executive dashboards refresh every 15 minutes. Reports delivered automatically to stakeholders', color: '#22C55E' },
   { icon: <CheckCircle2 size={16} />, title: 'Microsoft Purview Governance', desc: 'Full data lineage, metadata catalog, RBAC, GDPR compliance — automated audit trails end-to-end', color: '#22C55E' },
-  { icon: <CheckCircle2 size={16} />, title: 'Cloud-Native Scalability', desc: 'Microsoft Fabric scales elastically to handle 100M+ transactions/day across all global markets', color: '#22C55E' },
-  { icon: <CheckCircle2 size={16} />, title: 'Multi-Language NLP Processing', desc: 'Automated language detection and normalisation for 30+ languages using Azure Cognitive Services', color: '#22C55E' },
+  { icon: <CheckCircle2 size={16} />, title: 'Cloud-Native Scalability', desc: 'Microsoft Fabric scales elastically to handle 10M+ transactions/day across all national regions', color: '#22C55E' },
+  { icon: <CheckCircle2 size={16} />, title: 'Clinical NLP Processing', desc: 'Automated clinical entity extraction and normalisation using Azure Cognitive Services', color: '#22C55E' },
 ];
 
 const metrics = [
-  { value: '150+', label: 'Countries', sub: 'Global reach' },
+  { value: '100+', label: 'Trusts', sub: 'National reach' },
   { value: '3→0', label: 'Manual Days', sub: 'Report generation' },
   { value: '99.9%', label: 'Data Accuracy', sub: 'Gold layer' },
   { value: '15min', label: 'Refresh Rate', sub: 'Real-time BI' },
@@ -51,12 +51,12 @@ export default function ProcessFlowPage() {
       {/* Page Header */}
       <div className="cwt-page-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>CWT Enterprise EDW</span>
+          <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>HRA Data Platform</span>
           <span className="cwt-badge" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }}>Process Transformation</span>
         </div>
         <h1 style={{ fontSize: 30, fontWeight: 800, margin: '0 0 8px', letterSpacing: '-0.5px', position: 'relative', zIndex: 1 }}>Current State vs Future State</h1>
         <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.7)', maxWidth: 680, lineHeight: 1.6, position: 'relative', zIndex: 1 }}>
-          A comprehensive transformation of CWT's data landscape — from fragmented, manual processes across 150+ countries to a fully automated, cloud-native enterprise data platform.
+          A comprehensive transformation of HRA's data landscape — from fragmented, manual processes across 100+ NHS Trusts to a fully automated, cloud-native enterprise data platform.
         </p>
       </div>
 
@@ -131,10 +131,10 @@ export default function ProcessFlowPage() {
       <div style={{ marginTop: 28, background: 'linear-gradient(135deg, rgba(0,120,212,0.06), rgba(0,120,212,0.02))', border: '1px solid rgba(0,120,212,0.15)', borderRadius: 14, padding: '24px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <div style={{ fontSize: 16, fontWeight: 800, color: 'var(--text)', marginBottom: 4 }}>Transformation Delivered by The Visionarys</div>
-          <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>Enterprise Data Engineering · Microsoft Azure · Microsoft Fabric · Power BI · Pega Integration</div>
+          <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>Enterprise Data Engineering · Microsoft Azure · Microsoft Fabric · Power BI · IRAS Integration</div>
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
-          {['Azure', 'Microsoft Fabric', 'Power BI', 'Pega'].map(t => (
+          {['Azure', 'Microsoft Fabric', 'Power BI', 'IRAS'].map(t => (
             <span key={t} style={{ padding: '6px 14px', background: '#fff', border: '1px solid var(--border)', borderRadius: 20, fontSize: 11, fontWeight: 700, color: 'var(--text-muted)' }}>{t}</span>
           ))}
         </div>
