@@ -62,7 +62,7 @@ export default function Sidebar() {
   return (
     <aside className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
       {/* Logo */}
-      <div className="sidebar-logo" style={{ paddingBottom: '24px' }}>
+      <Link href="/overview" className="sidebar-logo" style={{ paddingBottom: '24px', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '12px' }}>
         <Image
           src="/images/logo.avif"
           alt="The Visionarys"
@@ -77,7 +77,7 @@ export default function Sidebar() {
             Envision · Innovate · Achieve
           </div>
         </div>
-      </div>
+      </Link>
 
       <div className="sidebar-logo-text-wrapper" style={{ padding: '16px 18px 0' }}>
         <div style={{ 
