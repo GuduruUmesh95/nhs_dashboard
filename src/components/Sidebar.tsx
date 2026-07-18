@@ -72,7 +72,7 @@ export default function Sidebar() {
           priority
         />
         <div className="sidebar-logo-text-wrapper">
-          <div className="sidebar-logo-text">The Visionarys</div>
+          <div className="sidebar-logo-text">The Visionarys Ltd</div>
           <div style={{ fontSize: 8.5, color: 'rgba(255,255,255,0.4)', marginTop: 4, letterSpacing: '0.5px', textTransform: 'uppercase' }}>
             Envision · Innovate · Achieve
           </div>
